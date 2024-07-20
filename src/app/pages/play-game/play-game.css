@@ -1,53 +1,57 @@
-.wrapper {
+/* Общий контейнер */
+.play-game {
     display: flex;
     flex-direction: column;
     height: 100vh;
     position: relative;
     align-items: center;
-    gap: 4px;
-    background: #282c34; /* Тёмный фон для страницы */
-    color: #f5f5f5; /* Светлый текст */
-    font-family: 'Arial', sans-serif; /* Шрифт для страницы */
+    gap: 16px;
+    background: #2e2e2e; /* Тёмный фон */
+    color: #e0e0e0; /* Светлый текст */
+    font-family: 'Roboto', sans-serif; /* Шрифт для страницы */
+    padding: 16px;
 }
 
 /* Заголовок страницы */
 h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 20px;
-    color: #61dafb; /* Цвет заголовка */
+    color: #ff5722; /* Цвет заголовка */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Тень для заголовка */
 }
 
 /* Контейнер для стола */
 .table {
-    width: calc(100% - 20px); /* Убираем немного от общей ширины, чтобы оставить место для отступов */
-    height: 500px;
+    width: calc(100% - 40px);
+    max-width: 800px;
+    height: 400px;
     margin: 0 auto;
-    gap: 10px;
-    background: #3c3f41; /* Цвет стола */
-    border-radius: 8px;
+    background: #3b3b3b; /* Цвет стола */
+    border-radius: 16px;
+    border: 3px solid #ff5722; /* Граница стола */
     overflow: hidden;
-    border: 2px solid #61dafb; /* Граница стола */
     position: relative; /* Для позиционирования дочерних элементов */
 }
 
 /* Контейнер для карт игрока */
 .my-cards {
-    width: 80%;
-    height: 200px;
-    margin: 20px auto; /* Отступы сверху и снизу */
-    background: #3c3f41; /* Цвет фона для карт игрока */
-    border-radius: 8px;
-    overflow: hidden;
-    border: 2px solid #61dafb; /* Граница контейнера */
+    width: calc(100% - 40px);
+    max-width: 800px;
+    height: 150px;
+    margin: 20px auto;
+    background: #3b3b3b; /* Цвет фона для карт игрока */
+    border-radius: 16px;
+    border: 3px solid #ff5722; /* Граница контейнера */
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 /* Контейнер для карт */
 .cards-container {
     display: flex;
-    gap: 8px;
+    gap: 12px;
     align-items: center;
     justify-content: center;
     position: relative;
@@ -59,16 +63,20 @@ h1 {
 /* Индивидуальные карты */
 .card-image {
     opacity: 0; /* Начальное состояние непрозрачности */
-    transform: translateY(100%); /* Начальная позиция карты снизу */
+    transform: translateY(20px); /* Начальная позиция карты снизу */
     transition: opacity 0.5s ease, transform 0.5s ease; /* Плавное изменение состояния */
-    width: 60px; /* Уменьшенный размер карты */
-    height: 90px;
-    border-radius: 8px; /* Скругление углов карт */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Тень для карт */
+    width: 80px; /* Размер карты */
+    height: 120px;
+    border-radius: 12px; /* Скругление углов карт */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Тень для карт */
     cursor: pointer;
+    transition: transform 0.3s ease; /* Плавное изменение трансформации */
 }
 
-/* Анимация появления карты */
+.card-image:hover {
+    transform: scale(1.1); /* Увеличение при наведении */
+}
+
 .card-image.entered {
     opacity: 1; /* Прозрачность карты после анимации */
     transform: translateY(0); /* Конечная позиция карты */
@@ -77,38 +85,48 @@ h1 {
 
 /* Карты на столе */
 .table-card {
-    width: 80px; /* Размер карты на столе */
-    height: 120px;
-    border-radius: 8px; /* Скругление углов карт */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Тень для карт */
+    width: 90px; /* Размер карты на столе */
+    height: 135px;
+    border-radius: 12px; /* Скругление углов карт */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Тень для карт */
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Плавное изменение трансформации */
+}
+
+.table-card:hover {
+    transform: scale(1.1); /* Увеличение при наведении */
 }
 
 /* Кнопки управления */
 button {
-    background: #61dafb; /* Цвет кнопки */
+    background: #ff5722; /* Цвет кнопки */
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
     margin: 5px;
-    color: #282c34; /* Цвет текста кнопки */
+    color: #ffffff; /* Цвет текста кнопки */
     font-size: 1rem;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s ease; /* Плавный переход цвета фона */
+    transition: background 0.3s ease, transform 0.2s ease; /* Плавный переход цвета фона и трансформации */
 }
 
 button:hover {
-    background: #21a1f1; /* Цвет кнопки при наведении */
+    background: #e64a19; /* Цвет кнопки при наведении */
+    transform: scale(1.05); /* Легкое увеличение при наведении */
 }
 
 button:active {
-    background: #1e90ff; /* Цвет кнопки при нажатии */
+    background: #d84315; /* Цвет кнопки при нажатии */
+    transform: scale(0.95); /* Легкое уменьшение при нажатии */
 }
 
 button:focus {
     outline: none; /* Убираем обводку при фокусе */
 }
 
+/* Сообщение об ошибке */
 .error-message {
-    color: red;
+    color: #ff5722; /* Цвет ошибки */
     margin-top: 10px;
+    font-weight: bold;
 }

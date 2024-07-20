@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useSpring, animated } from '@react-spring/web';
+import { animated } from '@react-spring/web';
 import './play-game.css'; // Импортируйте ваш CSS файл
 
 interface GameData {
-    table: number;
+    table: Array<{
+        card: string;
+        beaten_by_card: string | null;
+        participant_threw_by_id: number | null;
+        participant_threw_to_id: number;
+    }>;
     free_cards_amount: number;
     trump: string;
     trump_card: string;
@@ -21,16 +26,20 @@ const PlayGame: React.FC = () => {
     const [movingCard, setMovingCard] = useState<string | null>(null);
     const [movingCardStyle, setMovingCardStyle] = useState<any>({});
     const [tableCards, setTableCards] = useState<string[]>([]);
+    const [cardOnTable, setCardOnTable] = useState<string | null>(null);
 
     const fetchGameData = async () => {
         try {
-            const response = await axios.get('http://77.222.37.34:8001/v1/games/2/get_current_table', {
+            const response = await axios.get('http://77.222.37.34:8001/v1/games/3/get_current_table', {
                 headers: {
-                    'Authorization': '8c3f82f70111994cd473b5941e4d75ccfa2977e9bdffcc4b'
+                    'Authorization': '992f246b0e7b67b0c29d5e2925b3cad5db6e198e59d22bd9'
                 },
             });
             setGameData(response.data);
             setError(null);
+            // Обновите tableCards после получения данных
+            const cardsOnTable = response.data.table.map(cardObj => cardObj.card);
+            setTableCards(cardsOnTable);
         } catch (error) {
             setError('Ошибка получения данных о текущей игре');
             console.error('Error fetching game data:', error);
@@ -71,70 +80,60 @@ const PlayGame: React.FC = () => {
         setShowCards(true);
     };
 
-    const handleCardClick = (card: string) => {
-        setSelectedCard(card);
-        setMovingCard(card);
-        setTimeout(() => {
-            setMovingCard(null); // Сброс состояния после завершения анимации
-            setTableCards((prevTableCards) => [...prevTableCards, card]); // Добавляем карту на стол
-            setGameData((prevGameData) => {
-                if (!prevGameData) return prevGameData;
-                return {
-                    ...prevGameData,
-                    hand: prevGameData.hand.filter((c) => c !== card), // Убираем карту из руки
-                };
+    const handleCardClick = async (card: string) => {
+        try {
+            await axios.post(`http://77.222.37.34:8001/v1/games/3/place_card_on_table?card=${card}`, {}, {
+                headers: {
+                    'Authorization': '992f246b0e7b67b0c29d5e2925b3cad5db6e198e59d22bd9'
+                },
             });
-        }, 500); // Длительность анимации в CSS
+            setCardOnTable(card); // Сохранение карты на столе
+            setMovingCard(card);
+            setTimeout(() => {
+                setMovingCard(null); // Сброс состояния после завершения анимации
+                setTableCards((prevTableCards) => [...prevTableCards, card]); // Добавляем карту на стол
+                setGameData((prevGameData) => {
+                    if (!prevGameData) return prevGameData;
+                    return {
+                        ...prevGameData,
+                        hand: prevGameData.hand.filter((c) => c !== card), // Убираем карту из руки
+                    };
+                });
+            }, 500); // Длительность анимации в CSS
+        } catch (error) {
+            setError('Ошибка укладки карты на стол');
+            console.error('Error placing card on table:', error);
+        }
     };
 
     const handleTableCardClick = (card: string) => {
-        setSelectedCard(card);
-        setMovingCard(card);
-        setTimeout(() => {
-            setMovingCard(null); // Сброс состояния после завершения анимации
-            setGameData((prevGameData) => {
-                if (!prevGameData) return prevGameData;
-                return {
-                    ...prevGameData,
-                    hand: [...prevGameData.hand, card], // Добавляем карту обратно в руку
-                };
-            });
-            setTableCards((prevTableCards) => prevTableCards.filter((c) => c !== card)); // Убираем карту со стола
-        }, 500); // Длительность анимации в CSS
+        setSelectedCard(card); // Установить выбранную карту для побития
     };
 
-    const handleBita = async () => {
+    const handleBeatCard = async () => {
+        if (!cardOnTable || !selectedCard) return; // Убедитесь, что карты установлены
+
         try {
-            await axios.post('http://77.222.37.34:8001/v1/games/2/bita', {}, {
+            await axios.post(`http://77.222.37.34:8001/v1/games/3/beat_card?card_to_beat=${cardOnTable}&card_to_beat_by=${selectedCard}`, {}, {
                 headers: {
-                    'Authorization': '8c3f82f70111994cd473b5941e4d75ccfa2977e9bdffcc4b'
+                    'Authorization': '992f246b0e7b67b0c29d5e2925b3cad5db6e198e59d22bd9'
                 },
             });
             fetchGameData(); // Обновить данные после выполнения действия
+            setCardOnTable(null); // Сброс карты на столе после побития
+            setSelectedCard(null); // Сброс выбранной карты после побития
         } catch (error) {
-            setError('Ошибка выполнения действия "бита"');
-            console.error('Error sending bita request:', error);
+            setError('Ошибка при побитии карты');
+            console.error('Error beating card:', error);
         }
     };
 
-    const handleBots = async () => {
-        try {
-            await axios.post('http://77.222.37.34:8001/v1/games/2/bots', {}, {
-                headers: {
-                    'Authorization': '8c3f82f70111994cd473b5941e4d75ccfa2977e9bdffcc4b'
-                },
-            });
-            fetchGameData(); // Обновить данные после выполнения действия
-        } catch (error) {
-            setError('Ошибка выполнения действия с ботами');
-            console.error('Error sending bots request:', error);
-        }
+    const handleEndTurn = async () => {
+        // Логика для завершения хода
     };
 
     return (
-        <div className="wrapper">
-            <h1>Игра в дурака</h1>
-
+        <div className="play-game">
             <div className="table">
                 {movingCard && (
                     <animated.img
@@ -173,8 +172,8 @@ const PlayGame: React.FC = () => {
                 )}
             </div>
             <button onClick={handleShowCards}>Показать карты</button>
-            <button onClick={handleBita}>Бита</button>
-            <button onClick={handleBots}>Управление ботами</button>
+            <button onClick={handleBeatCard}>Бита</button>
+            <button onClick={handleEndTurn}>Закончить ход</button>
             {error && <p className="error-message">{error}</p>}
         </div>
     );
