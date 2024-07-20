@@ -76,7 +76,7 @@ body {
     z-index: 1;
     margin-top: -25px;
     padding: 15px 0;
-    background-image: url(../img/titus-wrapper.svg);
+    background-image: url(../../../assets/img/titus-wrapper.svg);
     background-position: center;
     border-top: 1px solid #e1d6d1;
     border-bottom: 1px solid #918789;
@@ -162,7 +162,7 @@ body {
 /* header */
 
 .header-main {
-    background-image: url(../img/header-bg.svg);
+    background-image: url(../../../assets/img/header-bg.svg);
     border: 1px solid rgb(0, 0, 0);
     background-repeat: no-repeat;
     background-size: cover;
@@ -253,7 +253,7 @@ body {
 .main-gl {
     padding-top: 15px;
     /*height:100vh;*/
-    background-image: url(../img/main-bg.svg);
+    background-image: url(../../../assets/img/main-bg.svg);
     background-repeat: no-repeat;
     background-position: bottom;
     background-size: contain;
@@ -306,7 +306,7 @@ body {
 }
 
 .main-gl-bef::before {
-    content: url(../img/gl-btn-left.svg);
+    content: url(../../../assets/img/gl-btn-left.svg);
     position: absolute;
     top: -10px;
     left: -10px;
@@ -314,7 +314,7 @@ body {
 }
 
 .main-gl-bef::after {
-    content: url(../img/gl-btn-right.svg);
+    content: url(../../../assets/img/gl-btn-right.svg);
     position: absolute;
     top: -10px;
     right: -10px;
@@ -385,7 +385,7 @@ body {
     bottom: 0;
     left: 0px;
     width: 10px;
-    background-image: url('../img/Frame_Left.svg');
+    background-image: url('../../../assets/img/Frame_Left.svg');
     background-size: cover;
     z-index: 2;
 }
@@ -399,7 +399,7 @@ body {
     bottom: 0;
     right: 0px;
     width: 10px;
-    background-image: url('../img/Frame_Right.svg');
+    background-image: url('../../../assets/img/Frame_Right.svg');
     background-size: cover;
     z-index: 2;
 }
@@ -430,7 +430,7 @@ body {
     background-size: cover;
     border-radius: 8px;
     background-position: center;
-    background-image: url(../img/kvest-block-fon1.svg);
+    background-image: url(../../../assets/img/kvest-block-fon1.svg);
     background-repeat: no-repeat;
     border-top: 2px solid #e2d7d2;
     border-bottom: 2px solid #918789;
@@ -726,7 +726,7 @@ border-image-slice: 1; */
 .rejim-igry-block {
     position: relative;
     border-radius: 8px;
-    background-image: url(../img/rejim-bg.svg);
+    background-image: url(../../../assets/img/rejim-bg.svg);
     background-size: cover;
     background-position: center;
     padding: 10px 0;
@@ -886,11 +886,10 @@ border-image-slice: 1; */
 .create-kn {
     padding: 10px 15px;
     border-radius: 8px;
-    background-image: url(../img/creat-bg.svg);
+    background-image: url(../../../assets/img/creat-bg.svg);
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
-    letter-spacing: 0%;
     text-align: center;
     color: #fff;
 }
@@ -966,7 +965,7 @@ border-image-slice: 1; */
 .referal-block {
     margin-bottom: 10px;
     padding: 15px;
-    background-image: url(../img/referal-bg.svg);
+    background-image: url(../../../assets/img/referal-bg.svg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1023,7 +1022,7 @@ border-image-slice: 1; */
     margin-bottom: 30px;
     padding: 15px 15px;
     border-radius: 8px;
-    background-image: url(../img/SharetoFriend.svg);
+    background-image: url(../../../assets/img/SharetoFriend.svg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1124,16 +1123,16 @@ border-image-slice: 1; */
 .firs-mesto {
 
     padding: 25px 15px;
-    background-image: url(../img/Top1-cropped.svg);
+    background-image: url(../../../assets/img/Top1-cropped.svg);
 }
 
 .two-mesto {
     padding: 20px 15px;
-    background-image: url(../img/two-mesto.svg);
+    background-image: url(../../../assets/img/two-mesto.svg);
 }
 
 .three-mesto {
-    background-image: url(../img/Top3.svg);
+    background-image: url(../../../assets/img/Top3.svg);
 }
 
 .mesto {
@@ -1178,7 +1177,7 @@ border-image-slice: 1; */
 .footer {}
 
 .footer-wrapper {
-    background-image: url(../img/footer-bg.svg);
+    background-image: url(../../../assets/img/footer-bg.svg);
     border: 1px solid rgb(0, 0, 0);
     background-repeat: no-repeat;
     background-size: cover;
@@ -1225,7 +1224,7 @@ border-image-slice: 1; */
     padding: 15px 0;
 
     position: relative;
-    background-image: url(../img/modal-bgs-cropped.svg);
+    background-image: url(../../../assets/img/modal-bgs-cropped.svg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -1365,7 +1364,7 @@ border-image-slice: 1; */
 .modal-every-day {
     padding: 15px;
     border-radius: 8px;
-    background-image: url(../img/modal-every.svg);
+    background-image: url(../../../assets/img/modal-every.svg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1411,7 +1410,7 @@ border-image-slice: 1; */
     font-weight: 400;
     font-size: 48px;
     line-height: 133%;
-    background-image: url(../img/Numbers.svg);
+    background-image: url(../../../assets/img/Numbers.svg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -1458,7 +1457,7 @@ border-image-slice: 1; */
 
 .modal-prig {
     padding: 15px;
-    background-image: url(../img/modal-every.svg);
+    background-image: url(../../../assets/img/modal-every.svg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1614,7 +1613,7 @@ border-image-slice: 1; */
 
 .footer-ava-roga::after {
     position: absolute;
-    content: url(../img/ava-right.svg);
+    content: url(../../../assets/img/ava-right.svg);
     top: 12%;
     right: -20%;
     z-index: -1;
@@ -1622,7 +1621,7 @@ border-image-slice: 1; */
 
 .footer-ava-roga::before {
     position: absolute;
-    content: url(../img/ava-left.svg);
+    content: url(../../../assets/img/ava-left.svg);
     top: 12%;
     left: -20%;
     z-index: -1;
@@ -1773,7 +1772,7 @@ background-size: contain; */
     bottom: 0;
     left: 0px;
     width: 20px;
-    background-image: url(../img/Left.svg);
+    background-image: url(../../../assets/img/Left.svg);
     background-size: cover;
     z-index: 1;
 }
@@ -1785,7 +1784,7 @@ background-size: contain; */
     bottom: 0;
     right: 0px;
     width: 20px;
-    background-image: url(../img/Right.svg);
+    background-image: url(../../../assets/img/Right.svg);
     background-size: cover;
     z-index: 1;
 }

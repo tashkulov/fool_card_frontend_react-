@@ -131,7 +131,7 @@ const PlayPage: React.FC = () => {
                                 </div>
                                 <div className="players-flex">
                                     <div className="player-block footer-ava-wp">
-                                        <img src="assets/img/Gameplay_Avatar.svg" alt="Player Avatar" />
+                                        <img src="../../../assets/img/Gameplay_Avatar.svg" alt="Player Avatar" />
                                     </div>
                                     <div className="player-block footer-ava-wp">
                                         <img src="../../../assets/img/Gameplay_Avatar.svg" alt="Player Avatar" />
