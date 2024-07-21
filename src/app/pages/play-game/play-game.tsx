@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { animated } from '@react-spring/web';
-import './play-game.css'; // Импортируйте ваш CSS файл
+import './play-game.css';
+import back_card from '../../../assets/cards/back/back_2.svg';
 
 interface GameData {
     table: Array<{
@@ -24,30 +24,25 @@ const PlayGame: React.FC = () => {
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
     const [cardAnimation, setCardAnimation] = useState<string[]>([]);
     const [movingCard, setMovingCard] = useState<string | null>(null);
-    const [movingCardStyle, setMovingCardStyle] = useState<any>({});
+    const [movingCardStyle, setMovingCardStyle] = useState({});
     const [tableCards, setTableCards] = useState<string[]>([]);
     const [cardOnTable, setCardOnTable] = useState<string | null>(null);
-
-    const fetchGameData = async () => {
-        try {
-            const response = await axios.get('http://77.222.37.34:8001/v1/games/3/get_current_table', {
-                headers: {
-                    'Authorization': '992f246b0e7b67b0c29d5e2925b3cad5db6e198e59d22bd9'
-                },
-            });
-            setGameData(response.data);
-            setError(null);
-            // Обновите tableCards после получения данных
-            const cardsOnTable = response.data.table.map(cardObj => cardObj.card);
-            setTableCards(cardsOnTable);
-        } catch (error) {
-            setError('Ошибка получения данных о текущей игре');
-            console.error('Error fetching game data:', error);
-        }
-    };
+    const [beatenCards, setBeatenCards] = useState<string[]>([]);
+    const [zIndex, setZIndex] = useState<string | null>(null);
 
     useEffect(() => {
-        fetchGameData();
+        const mockData: GameData = {
+            table: [],
+            free_cards_amount: 24,
+            trump: 'sp',
+            trump_card: 'sp_14',
+            hand: ['cl_10', 'ht_12', 'sp_7', 'dm_13', 'sp_13'],
+            participants: {},
+        };
+
+        setGameData(mockData);
+        const cardsOnTable = mockData.table.map(cardObj => cardObj.card);
+        setTableCards(cardsOnTable);
     }, []);
 
     useEffect(() => {
@@ -73,63 +68,70 @@ const PlayGame: React.FC = () => {
 
     const getCardImagePath = (card: string) => {
         const [suit] = card.split('_');
-        return new URL(`../../../assets/cards/${suit}/${card}.svg`, import.meta.url).href;
+        const path = new URL(`../../../assets/cards/${suit}/${card}.svg`, import.meta.url).href;
+        return path;
     };
 
     const handleShowCards = () => {
         setShowCards(true);
     };
 
-    const handleCardClick = async (card: string) => {
-        try {
-            await axios.post(`http://77.222.37.34:8001/v1/games/3/place_card_on_table?card=${card}`, {}, {
-                headers: {
-                    'Authorization': '992f246b0e7b67b0c29d5e2925b3cad5db6e198e59d22bd9'
-                },
-            });
-            setCardOnTable(card); // Сохранение карты на столе
-            setMovingCard(card);
-            setTimeout(() => {
-                setMovingCard(null); // Сброс состояния после завершения анимации
-                setTableCards((prevTableCards) => [...prevTableCards, card]); // Добавляем карту на стол
-                setGameData((prevGameData) => {
-                    if (!prevGameData) return prevGameData;
-                    return {
-                        ...prevGameData,
-                        hand: prevGameData.hand.filter((c) => c !== card), // Убираем карту из руки
-                    };
-                });
-            }, 500); // Длительность анимации в CSS
-        } catch (error) {
-            setError('Ошибка укладки карты на стол');
-            console.error('Error placing card on table:', error);
-        }
+    const handleCardClick = (card: string) => {
+        setTableCards(prevTableCards => [...prevTableCards, card]);
+        setGameData(prevGameData => {
+            if (!prevGameData) return prevGameData;
+            return {
+                ...prevGameData,
+                hand: prevGameData.hand.filter(c => c !== card),
+                table: [...prevGameData.table, { card, beaten_by_card: null, participant_threw_by_id: null, participant_threw_to_id: 1 }]
+            };
+        });
     };
 
     const handleTableCardClick = (card: string) => {
-        setSelectedCard(card); // Установить выбранную карту для побития
+        setSelectedCard(card);
+        setCardOnTable(card);
     };
 
-    const handleBeatCard = async () => {
-        if (!cardOnTable || !selectedCard) return; // Убедитесь, что карты установлены
+    const handleBeatCard = () => {
+        if (!cardOnTable || !selectedCard) return;
 
-        try {
-            await axios.post(`http://77.222.37.34:8001/v1/games/3/beat_card?card_to_beat=${cardOnTable}&card_to_beat_by=${selectedCard}`, {}, {
-                headers: {
-                    'Authorization': '992f246b0e7b67b0c29d5e2925b3cad5db6e198e59d22bd9'
-                },
-            });
-            fetchGameData(); // Обновить данные после выполнения действия
-            setCardOnTable(null); // Сброс карты на столе после побития
-            setSelectedCard(null); // Сброс выбранной карты после побития
-        } catch (error) {
-            setError('Ошибка при побитии карты');
-            console.error('Error beating card:', error);
-        }
+        setGameData(prevGameData => {
+            if (!prevGameData) return prevGameData;
+
+            const updatedTable = prevGameData.table.map(cardObj =>
+                cardObj.card === cardOnTable ? { ...cardObj, beaten_by_card: selectedCard } : cardObj
+            );
+
+            return {
+                ...prevGameData,
+                table: updatedTable,
+            };
+        });
+
+        setTableCards(prevTableCards =>
+            prevTableCards.filter(card => card !== cardOnTable)
+        );
+
+        setBeatenCards(prevBeatenCards => [...prevBeatenCards, cardOnTable]);
+        setCardOnTable(null);
+        setSelectedCard(null);
+        setZIndex(cardOnTable);
     };
 
-    const handleEndTurn = async () => {
-        // Логика для завершения хода
+    const handleEndTurn = () => {
+        if (!gameData) return;
+
+        setBeatenCards(prevBeatenCards => [...prevBeatenCards, ...tableCards]);
+        setTableCards([]);
+
+        setGameData(prevGameData => {
+            if (!prevGameData) return prevGameData;
+            return {
+                ...prevGameData,
+                table: [],
+            };
+        });
     };
 
     return (
@@ -143,38 +145,59 @@ const PlayGame: React.FC = () => {
                         style={movingCardStyle}
                     />
                 )}
-                {/* Отображение карт на столе */}
-                {tableCards.map((card) => (
+                {tableCards.map((card, index) => (
                     <img
-                        key={card}
+                        key={index}
                         src={getCardImagePath(card)}
                         alt={card}
-                        className="card-image entered table-card"
-                        onClick={() => handleTableCardClick(card)} // Обработчик клика по карте на столе
+                        className="card-image table-card"
+                        onClick={() => handleTableCardClick(card)}
                     />
                 ))}
-            </div>
-
-            <div className="my-cards">
-                {showCards && gameData && (
-                    <div className="cards-container">
-                        {gameData.hand.map((card, index) => (
-                            <img
-                                key={card}
-                                src={getCardImagePath(card)}
-                                alt={card}
-                                className={`card-image ${cardAnimation.includes(card) ? 'entered' : ''}`}
-                                style={{ transitionDelay: `${index * 0.2}s` }} // Задержка для каждого элемента
-                                onClick={() => handleCardClick(card)}
-                            />
-                        ))}
+                <div className="beaten-cards-container">
+                    {beatenCards.map((card, index) => (
+                        <img
+                            key={index}
+                            src={getCardImagePath(card)}
+                            alt={card}
+                            className="card-image beaten-card"
+                            style={{ top: `${index * 20}px`, left: `${index * 20}px`, zIndex: (card === zIndex ? 1000 : 2) }}
+                        />
+                    ))}
+                </div>
+                {gameData?.trump_card && (
+                    <div className="trump-card-container">
+                        <img
+                            src={getCardImagePath(gameData.trump_card)}
+                            alt="Trump Card"
+                            className="trump-card"
+                        />
+                        <img
+                            src={back_card}
+                            alt="Back Card"
+                            className="back-card"
+                        />
                     </div>
                 )}
             </div>
-            <button onClick={handleShowCards}>Показать карты</button>
-            <button onClick={handleBeatCard}>Бита</button>
-            <button onClick={handleEndTurn}>Закончить ход</button>
-            {error && <p className="error-message">{error}</p>}
+            <div className="my-cards">
+                {gameData && gameData.hand.map((card, index) => (
+                    <img
+                        key={index}
+                        src={getCardImagePath(card)}
+                        alt={card}
+                        className={`card-image ${showCards && cardAnimation.includes(card) ? 'entered' : ''}`}
+                        onClick={() => handleCardClick(card)}
+                        style={{ zIndex: (card === selectedCard ? 1000 : 'auto') }}
+                    />
+                ))}
+            </div>
+            <button onClick={handleShowCards}>Show Cards</button>
+            <button onClick={handleBeatCard} disabled={!selectedCard || !cardOnTable}>
+                Beat Card
+            </button>
+            <button onClick={handleEndTurn}>End Turn</button>
+            {error && <div className="error-message">{error}</div>}
         </div>
     );
 };
