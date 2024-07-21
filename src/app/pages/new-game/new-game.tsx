@@ -19,7 +19,7 @@ export default class NewGame extends Component {
              <div className='rejim'>
              <label className='checkbox'>
 	<input type="checkbox" name="check" /> 
-	<svg version="1.1" className="checkbox_svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" contentStyleType="enable-background:new 0 0 100 100;" xml:space="preserve"><polyline className="checkbox_line" points="3.5,51.5 40.5,82.5 96.7,15.3 "/></svg>
+	<svg version="1.1" className="checkbox_svg" xmlns="http://www.w3.org/2000/svg"   x="0px" y="0px" viewBox="0 0 100 100" contentStyleType="enable-background:new 0 0 100 100;" xml:space="preserve"><polyline className="checkbox_line" points="3.5,51.5 40.5,82.5 96.7,15.3 "/></svg>
 </label>
             </div>
 

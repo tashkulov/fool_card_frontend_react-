@@ -20,10 +20,10 @@ interface GameData {
 const PlayGame: React.FC = () => {
     const [gameData, setGameData] = useState<GameData | null>(null);
     const [showCards, setShowCards] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
+    const [error, ] = useState<string | null>(null);
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
     const [cardAnimation, setCardAnimation] = useState<string[]>([]);
-    const [movingCard, setMovingCard] = useState<string | null>(null);
+    const [movingCard, ] = useState<string | null>(null);
     const [movingCardStyle, setMovingCardStyle] = useState({});
     const [tableCards, setTableCards] = useState<string[]>([]);
     const [cardOnTable, setCardOnTable] = useState<string | null>(null);
