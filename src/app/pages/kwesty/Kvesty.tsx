@@ -8,7 +8,7 @@ import Footer from "../../components/Footer/Footer";
 
 const Kvesty = () => {
     return (
-        <div className='container'>
+        <div className='container-kwest'>
             <Header text='Квесты' />
             <div className='kvesty-list'>
                 <OneKvest image={kvest1} headText="Выиграть 5000 монет" description="XP 30.5" buttonText='Начать' />
