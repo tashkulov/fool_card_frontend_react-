@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/home-page/home-page.tsx';
 import PlayGame from "./pages/play-game/play-game.tsx";
 import NewGame from "./pages/new-game/new-game.tsx";
-import Kwesty from "./pages/kwesty/kwesty.tsx";
+import Kvesty from "./pages/kwesty/Kvesty.tsx";
 
 const App: React.FC = () => {
     const user = {
@@ -18,7 +18,7 @@ const App: React.FC = () => {
                 <Route path="/" element={<HomePage user={user} />} />
                 <Route path="/in-game" element={<PlayGame  />} />
                 <Route path="/new-game" element={<NewGame />} />
-                <Route path="/kwesty" element={<Kwesty />} />
+                <Route path="/kvesty" element={<Kvesty />} />
             </Routes>
         </Router>
     );
