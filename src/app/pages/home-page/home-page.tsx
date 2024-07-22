@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import './home-page.css';
 
 interface User {
@@ -8,7 +8,7 @@ interface User {
 }
 
 interface HomePageProps {
-    user: User | null;
+    user?: User | null;
 }
 
 const HomePage: React.FC<HomePageProps> = ({ user }) => {
@@ -53,12 +53,16 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
             <div className="main-page-menu">
                 <div className="main-page-menu-buttons">
-                    <div className="main-page-menu-button" onClick={() => navigateTo('in-game')}>
-                        Играть
-                    </div>
-                    <div className="main-page-menu-button" onClick={() => navigateTo('leaderboard')}>
-                        Лидерборд
-                    </div>
+                    <Link to={'/inGame'}>
+                        <div className="main-page-menu-button">
+                            Играть
+                        </div>
+                    </Link>
+                    <Link to={'leaderboard'}>
+                        <div className="main-page-menu-button">
+                            Лидерборд
+                        </div>
+                    </Link>
                     <div className="main-page-menu-button">Рефералы</div>
                     <div className="main-page-menu-button">Настройки</div>
                 </div>
@@ -83,7 +87,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                     <div className="main-page-navbar-option open-icon"></div>
                     <h1 >Открытые</h1>
                 </div>
-                <div className="main-page-navbar-option new-game" onClick={() => navigateTo('new-game')}>
+                <div className="main-page-navbar-option new-game" onClick={() => navigateTo('/newGame')}>
                     <div className="main-page-navbar-option new-game-icon"></div>
                     <h1>Создать игру</h1>
                 </div>
