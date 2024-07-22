@@ -3,5 +3,8 @@
   cursor: pointer;
   color: white;
 }
+.main * {
+  box-sizing: border-box;
+}
 
 /*# sourceMappingURL=main.module.css.map */
