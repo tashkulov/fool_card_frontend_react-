@@ -79,9 +79,9 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                     <div className="main-page-navbar-option quests-icon"></div>
                     <h1>Квесты</h1>
                 </div>
-                <div className="main-page-navbar-option open">
+                <div className="main-page-navbar-option open"  onClick={() => navigateTo('kwesty')}>
                     <div className="main-page-navbar-option open-icon"></div>
-                    <h1>Открытые</h1>
+                    <h1 >Открытые</h1>
                 </div>
                 <div className="main-page-navbar-option new-game" onClick={() => navigateTo('new-game')}>
                     <div className="main-page-navbar-option new-game-icon"></div>
