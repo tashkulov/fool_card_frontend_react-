@@ -7,6 +7,22 @@
   gap: 10px;
   padding: 20px;
 }
+.main .listLeaderBoard .MVPPlayer {
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.main .listLeaderBoard .MVPPlayer .wrapperImgWithName {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.main .listLeaderBoard .MVPPlayer .wrapperImgWithExperience {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .main .leftSolid {
   position: absolute;
   height: 100vh;
