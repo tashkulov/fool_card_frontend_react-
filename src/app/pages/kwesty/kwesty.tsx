@@ -1,10 +1,9 @@
 import './kwesty.css'
+
 const Kwesty = () => {
     return (
         <div>
             <div className="wrapper">
-
-
                 <section className="kvesty-header">
                     <div className="container">
                         <div className="kvesty-header-img">
@@ -12,7 +11,7 @@ const Kwesty = () => {
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M196.455 45.4199C196.455 45.4199 196.385 45.4199 196.345 45.4199V45.3999C196.345 45.3999 196.425 45.3999 196.455 45.3999V45.4199Z"
-                                    fill="url(#paint0_linear_23_4440)" stroke="black" stroke-linecap="round"
+                                    fill="url(#paint0_linear_23_4440)" stroke="black" strokelinecap="round"
                                     stroke-linejoin="round"/>
                                 <path
                                     d="M196.555 45.4302C196.555 45.4302 196.485 45.4302 196.455 45.4302C196.485 45.4302 196.515 45.4302 196.555 45.4302Z"

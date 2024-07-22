@@ -1,26 +1,20 @@
-
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomePage from './pages/home-page/home-page.tsx';
-import PlayGame from "./pages/play-game/play-game.tsx";
-import NewGame from "./pages/new-game/new-game.tsx";
-import Kwesty from "./pages/kwesty/kwesty.tsx";
+import {AppRouter} from "./Router";
+import cls from "./main.module.scss"
+
+export const user = {
+    photo_url: 'URL_TO_PHOTO',
+    first_name: 'Имя пользователя',
+};
 
 const App: React.FC = () => {
-    const user = {
-        photo_url: 'URL_TO_PHOTO',
-        first_name: 'Имя пользователя',
-    };
 
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<HomePage user={user} />} />
-                <Route path="/in-game" element={<PlayGame  />} />
-                <Route path="/new-game" element={<NewGame />} />
-                <Route path="/kwesty" element={<Kwesty />} />
-            </Routes>
-        </Router>
+        <div className={cls.main}>
+            <AppRouter/>
+
+        </div>
+
     );
 };
 
