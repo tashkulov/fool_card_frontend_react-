@@ -9,8 +9,6 @@ const Kvesty = () => {
 
             <div id={'contents'}>
             <div className="wrapper">
-
-
                 <section className="kvesty-header">
                     <div className="container">
                         <div className="kvesty-header-img">
