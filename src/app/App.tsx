@@ -10,6 +10,7 @@ export const user = {
 const App: React.FC = () => {
 
     return (
+
         <div className={cls.main}>
             <AppRouter/>
 
