@@ -107,7 +107,7 @@ const NewGame = () => {
             </div>
             <section className="kvesty-title new-games">
                 <div className="container">
-                    <form className="form-new-game">
+                    <form onSubmit={handleSubmit} className="form-new-game">
                         <div className="kvesty-title-wrapper new-game-wrapper title-wrapper">
                             <p className="new-game-stavkap">Ваша ставка</p>
                             <div className="block-obvodka new-game-sts">
@@ -269,7 +269,7 @@ const NewGame = () => {
                                         <p>Приватная игра</p>
                                     </label>
 
-                                    <input onClick={handleSubmit} type="submit" className="create-kn block-obvodka" value="Создать" />
+                                    <input type="submit" className="create-kn block-obvodka" value="Создать" />
                                 </div>
                             </div>
                         </div>
