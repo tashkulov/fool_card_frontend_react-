@@ -1,137 +1,90 @@
-.play-game {
+.container {
+    background-color: #236245; /* Замените на нужный вам цвет */
+    height: 100vh;
+    overflow: auto; /* Позволяет прокручивать содержимое */
+    position: relative; /* Для размещения абсолютных элементов внутри контейнера */
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 45px;
+    background-image: url("./images/Header.svg");
+    background-repeat: no-repeat; /* Добавлено */
+    padding: 0 20px; /* Внутренние отступы для header */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Убедитесь, что header находится выше других элементов */
+    margin: 0;
+
+}
+
+.stafka {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Расстояние между иконкой и текстом */
+    color: #fff; /* Цвет текста */
+    margin: 0;
+
+}
+
+.stafka img {
+    margin-right: 10px;
+}
+
+.stafka h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.game-mode {
+    display: flex;
+    gap: 5px; /* Расстояние между картами */
+    width: 101px;
+    height: 29px;
+    background-color: #380C0C;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-mode img {
+    display: block;
+}
+
+.left-side {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    position: relative;
-    align-items: center;
-    gap: 16px;
-    background: #2e2e2e;
-    color: #e0e0e0;
-    font-family: 'Roboto', sans-serif;
-    padding: 16px;
-}
-.table {
-    width: calc(100% - 40px);
-    max-width: 800px;
-    height: 400px;
-    margin: 0 auto;
-    background: #3b3b3b;
-    border-radius: 16px;
-    border: 3px solid #ff5722;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.my-cards {
-    width: calc(100% - 40px);
-    max-width: 800px;
-    height: 150px;
-    margin: 20px auto;
-    background: #3b3b3b;
-    border-radius: 16px;
-    border: 3px solid #ff5722;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-.cards-container {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    height: auto;
-    pointer-events: none;
-}
-
-.card-image {
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    width: 80px;
-    height: auto;
-    cursor: pointer;
-
-    pointer-events: all;
-}
-
-.card-image.entered {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.table-card {
-    transition: all 0.5s ease;
-    position: relative;
-
-}
-
-
-.trump-card-container {
-    position: absolute;
-    right: 0; /* Размещаем контейнер в правом краю */
-    top: 50%; /* Центрируем по вертикали */
-    transform: translateY(-50%); /* Корректируем для точного центрирования */
-    display: flex;
-    flex-direction: column; /* Позиционирование карт друг под другом */
-    align-items: center; /* Центрирование карт по горизонтали */
-}
-
-.trump-card {
-    width: 80px;
-    height: auto;
-    margin: 10px;
-    position: relative;
-    z-index: 1; /* Задний план */
-}
-
-.back-card {
-    width: 80px;
-    height: auto;
-    transform: rotate(-90deg);
-    position: absolute;
-    top: 30px;
-    left: 8px;
-    z-index: 2; /* Передний план */
-}
-.beaten-cards-container {
-    display: flex;
-    flex-wrap: wrap;
     gap: 10px;
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    left: 0;
+    top: 30px; /* Отступ сверху, чтобы не перекрывать header */
+    bottom: 0;
+
+    background-image: url("./images/ugol.svg");
+    background-repeat: no-repeat; /* Добавлено */
 }
 
-.beaten-card {
-    width: 40px;
-    height: auto;
-    transform: rotate(30deg);
-
+.right-side {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    right: 0;
+    top: 30px; /* Отступ сверху, чтобы не перекрывать header */
+    bottom: 0;
+    background-image: url("./images/Right Safe Area.svg");
+    background-repeat: no-repeat; /* Добавлено */
 }
 
-.error-message {
-    color: red;
-    font-size: 16px;
-}
-
-button {
-    background: #ff5722;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin: 5px;
-    font-size: 16px;
-}
-
-button:disabled {
-    background: #888;
-    cursor: not-allowed;
+.illustration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: relative;
 }

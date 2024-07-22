@@ -1,8 +1,8 @@
 import {RouteProps} from "react-router-dom"
 import HomePage from "../../pages/home-page/home-page.tsx";
 import PlayGame from "../../pages/play-game/play-game.tsx";
-import NewGame from "../../pages/new-game/new-game.tsx";
 import Kvesty from "../../pages/kwesty/Kvesty.tsx";
+import NewGame from "../../pages/new-game/new-game.tsx";
 
 enum AppRoutes {
     HOMEPAGE = "homePage",
@@ -37,6 +37,7 @@ export const routerConfig: Record<AppRoutes, AppRouteProps> = {
     [AppRoutes.NEWGAME]: {
         path: RoutePaths.newGame,
         element: <NewGame/>
+
     },
     [AppRoutes.KVESTY]: {
         path: RoutePaths.kvesty,

@@ -4,6 +4,7 @@
     align-items: center;
     height: 852px;
     width: 393px;
+
     background-image: url("./images/main-page-bg.png");
     background-repeat: no-repeat;
     background-size: cover;
@@ -135,7 +136,7 @@
 .main-page-menu {
     display: flex;
     justify-content: center;
-
+    color: black;
     margin-top: 10px;
     z-index: 500;
     background-image: url('./images/main-page-menu-bg.png');

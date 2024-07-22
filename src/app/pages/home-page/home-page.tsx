@@ -1,7 +1,7 @@
 import React from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import './home-page.css';
-import Footer from "../../components/Footer.tsx";
+import Footer from "../../components/Footer/Footer.tsx";
 
 interface User {
     photo_url: string;
@@ -56,7 +56,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                             Играть
                         </div>
                     </Link>
-                    <Link to={'leaderboard'}>
+                    <Link to={'/leaderboard'}>
                         <div className="main-page-menu-button">
                             Лидерборд
                         </div>

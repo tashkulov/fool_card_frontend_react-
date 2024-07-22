@@ -2037,7 +2037,7 @@ height:48px;
     </div>
     
     
-  
+
 
  <div class="play-footer">
             <div class="play-footer-ava">
@@ -2058,14 +2058,14 @@ height:48px;
             </div>
 
         </div>
-        
-        
-        
-        
-        
-        
 
-        
+
+
+
+
+
+
+
         
         
         
@@ -2079,12 +2079,6 @@ height:48px;
    
    
    
-        
-<script>
- 
-
-
-</script>
 
  
 
@@ -2098,95 +2092,6 @@ height:48px;
 
 
 
-
-<script src="https://unpkg.com/@rive-app/canvas@2.17.3"></script>
-      
-      
-<script>   
-document.addEventListener('DOMContentLoaded', function() {
-
-
-const ru = new rive.Rive({
-    src: 'js/rive/ruby.riv',
-    canvas: document.getElementById('rubin'),
-    autoplay: true,
-
-});
-
-
-
-
-
-const diamond = new rive.Rive({
-    src: 'js/rive/diamond.riv',
-    canvas: document.getElementById('diamond'),
-    autoplay: true,
-});
-
-diamond.on('load', () => {
-    if (document.getElementById('diamond').classList.contains('active')) {
-        diamond.play('active');
-    }
-});
-
-      
-const hearts = new rive.Rive({
-    src: 'js/rive/hearts.riv',
-    canvas: document.getElementById('hearts'),
-    autoplay: true,
-});
-
-hearts.on('load', () => {
-    if (document.getElementById('hearts').classList.contains('active')) {
-        hearts.play('active');
-    }
-});
-
-
-
-const spades = new rive.Rive({
-    src: 'js/rive/spades.riv',
-    canvas: document.getElementById('spades'),
-    autoplay: true,
-});
-
-spades.on('load', () => {
-    if (document.getElementById('spades').classList.contains('active')) {
-        spades.play('active');
-    }
-});
-
-
-
-      const clubs = new rive.Rive({
-    src: 'js/rive/clubs.riv',
-    canvas: document.getElementById('clubs'),
-    autoplay: true,
-});
-
-clubs.on('load', () => {
-    if (document.getElementById('clubs').classList.contains('active')) {
-        clubs.play('active');
-    }
-});
-      
-      
-      
-});
-   
-    
-
-
-      
-      
-  </script>     
-      
-      
-      
-      
-      
-      
-      
       
      
     </body>
