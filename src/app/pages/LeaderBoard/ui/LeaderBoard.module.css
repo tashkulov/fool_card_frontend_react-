@@ -1,5 +1,25 @@
 .main {
   width: 100%;
 }
+.main .listLeaderBoard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+.main .leftSolid {
+  position: absolute;
+  height: 100vh;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+}
+.main .rightSolid {
+  position: absolute;
+  height: 100vh;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
 
 /*# sourceMappingURL=LeaderBoard.module.css.map */
