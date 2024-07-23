@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './new-game.css'
@@ -7,9 +6,11 @@ import NewBet from '../../../assets/img/new-stavka.svg';
 import Minus from '../../../assets/img/minus.svg';
 import Plus from '../../../assets/img/pluss.svg';
 
+
+// Define the types for the props and states
 type RiveAnimation = { play: () => void };
 
-const NewGame = () => {
+const CreateGameForm: React.FC = () => {
     const [betAmount, setBetAmount] = useState<number>(1200);
     const [selectedGameMode, setSelectedGameMode] = useState<string>('');
     const [selectedPlayerCount, setSelectedPlayerCount] = useState<string>('');
@@ -100,14 +101,13 @@ const NewGame = () => {
         }
     };
 
-
     return (
         <div className="main main-wrapp">
             <div className='header-illustration'>
                 <img className='header-illustration-img' src={headerIllustration} alt="" />
             </div>
             <section className="kvesty-title new-games">
-                <div className="container">
+                
                     <form onSubmit={handleSubmit} className="form-new-game">
                         <div className="kvesty-title-wrapper new-game-wrapper title-wrapper">
                             <p className="new-game-stavkap">Ваша ставка</p>
@@ -159,8 +159,7 @@ const NewGame = () => {
                                                         value={mode}
                                                         name="rejim-1"
                                                         checked={selectedGameMode === (mode === 'Подкидной' ? 'throwing' : 'sharing')}
-                                                        onChange={handleGameModeChange}
-                                                    />
+                                                        onChange={handleGameModeChange} />
                                                     <div className="image-radio" id="images">
                                                         <img src="assets/img/check_.svg" alt="" />
                                                     </div>
@@ -185,8 +184,7 @@ const NewGame = () => {
                                                         value={mode}
                                                         name="rejim-2"
                                                         checked={tossMode === (mode === 'Соседи' ? 'neighbors' : 'all')}
-                                                        onChange={handleTossModeChange}
-                                                    />
+                                                        onChange={handleTossModeChange} />
                                                     <div className="image-radio" id="images">
                                                         <img src="./img/check_.svg" alt="" />
                                                     </div>
@@ -211,8 +209,7 @@ const NewGame = () => {
                                                         value={mode}
                                                         name="rejim-3"
                                                         checked={gameEndingType === (mode === 'Классика' ? 'classic' : 'draw')}
-                                                        onChange={handleGameEndingTypeChange}
-                                                    />
+                                                        onChange={handleGameEndingTypeChange} />
                                                     <div className="image-radio" id="images">
                                                         <img src="./img/check_.svg" alt="" />
                                                     </div>
@@ -242,8 +239,7 @@ const NewGame = () => {
                                                 value={count}
                                                 name="kolvo"
                                                 checked={selectedPlayerCount === count.toString()}
-                                                onChange={handlePlayerCountChange}
-                                            />
+                                                onChange={handlePlayerCountChange} />
                                             <div className="image-radio" id="images">
                                                 <img src="./img/check_.svg" alt="" />
                                             </div>
@@ -264,8 +260,7 @@ const NewGame = () => {
                                             type="checkbox"
                                             className="custom-c"
                                             checked={isPrivate}
-                                            onChange={handlePrivateGameChange}
-                                        />
+                                            onChange={handlePrivateGameChange} />
                                         <span className="checkmark block-obvodka"></span>
                                         <p>Приватная игра</p>
                                     </label>
@@ -275,12 +270,12 @@ const NewGame = () => {
                             </div>
                         </div>
                     </form>
-                </div>
+                
             </section>
 
             <footer className="footer">
                 <div className="footer-wrapper">
-                    <div className="container">
+                    
                         <div className="footer-menu">
                             <div className="footer-menu-item">
                                 <a href="/">
@@ -306,13 +301,13 @@ const NewGame = () => {
                                     <p className="foot-men-p">Создать игру</p>
                                 </a>
                             </div>
+                            
                         </div>
-                    </div>
+                    
                 </div>
             </footer>
         </div>
     );
 };
 
-export default NewGame;
-
+export default CreateGameForm;
