@@ -12,22 +12,9 @@
 </head>
 
 
-<body style="margin: 0; height: 852px; width: 393px;">
+<body style="margin: 0; height: 100vh; width: 100vw;">
     <div id="root"></div>
     <script type="module" src="/src/app/main.tsx"></script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Настройка Telegram Web App API
-            Telegram.WebApp.onEvent('viewportChanged', function() {
-                Telegram.WebApp.setViewSize(393, 852);
-            });
-
-            Telegram.WebApp.ready(function() {
-                Telegram.WebApp.setViewSize(393, 852);
-            });
-        });
-    </script>
 </body>
 
 </html>
