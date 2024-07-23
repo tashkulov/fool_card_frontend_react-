@@ -61,23 +61,18 @@
 .play-footer-ava img {
     padding: 5px;
 }
-
-
 .footer-ava-wp {
-
     display: inline-block;
     border: 0.95px solid rgb(0, 0, 0);
     height: 100%;
     border-radius: 50%;
     background: linear-gradient(0.00deg, rgb(128, 119, 109) -17.66%, rgb(145, 135, 137) 2.79%, rgb(187, 176, 174) 33.465%, rgb(215, 204, 200) 60.422%, rgb(226, 215, 210) 75.295%);
 }
-
 .footer-ava-roga {
     position: relative;
     z-index: 1;
     display: inline-block;
 }
-
 .footer-ava-roga::after {
     position: absolute;
     content: url(../img/ava-right.svg);
@@ -85,7 +80,6 @@
     right: -20%;
     z-index: -1;
 }
-
 .footer-ava-roga::before {
     position: absolute;
     content: url(../img/ava-left.svg);
@@ -93,9 +87,6 @@
     left: -20%;
     z-index: -1;
 }
-
-/*  */
-
 /*play-header*/
 
 .play-header {
@@ -108,11 +99,6 @@
     background-size: contain; */
     background: linear-gradient(90.00deg, rgb(128, 119, 109), rgb(145, 135, 137) 22%, rgb(187, 176, 174) 55%, rgb(215, 204, 200) 84%, rgb(226, 215, 210) 100%);
 }
-
-
-
-
-
 .play-header-wrapper {
     padding: 8px 0;
     display: flex;
@@ -123,41 +109,32 @@
     border-right: 0.95px solid rgb(0, 0, 0);
     margin: 0 20px;
 }
-
-
 .play-header-block {
     gap: 15px;
     display: flex;
     align-items: center;
 }
-
 .play-header-back {
     padding: 10px;
     border-radius: 8px;
     background: linear-gradient(180.00deg, rgb(79, 21, 21), rgb(56, 12, 12) 100%);
     display: flex;
 }
-
-
 .play-header-coin img {
     width: 40px;
     height: 40px;
 }
-
-
 .play-header-coin {
     display: flex;
     align-items: center;
     gap: 8px;
 }
-
 .play-header-coin p {
     font-weight: 600;
     font-size: 20px;
     line-height: 120%;
     color: #000;
 }
-
 .play-header-rejim {
     padding: 5px 15px;
     border-radius: 8px;
@@ -169,8 +146,6 @@
     width: 17px;
     height: 22px;
 }
-
-
 .play-header-polosa {
     height: 8px;
     border-bottom: 0.95px solid rgb(0, 0, 0);
@@ -178,12 +153,6 @@
     border-right: 0.95px solid rgb(0, 0, 0);
     background: linear-gradient(182.50deg, rgb(226, 215, 210) -137.682%, rgb(215, 204, 200) -87.815%, rgb(187, 176, 174) 2.569%, rgb(145, 135, 137) 105.419%, rgb(128, 119, 109) 173.986%);
 }
-
-/**/
-
-
-
-
 
 /* main-wrapper-plays */
 
@@ -201,17 +170,6 @@
 .play-wrapper{
     position: relative;
 }
-
-
-
-
-
-
-
-
-
-
-
 .wrapper-plays-game {
 
 }
