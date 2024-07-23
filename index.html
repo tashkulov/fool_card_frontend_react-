@@ -11,9 +11,23 @@
     <title>Vite + React + TS</title>
 </head>
 
-<body style="margin: 0; width: 393px;">
-<div id="root"></div>
-<script type="module" src="/src/app/main.tsx"></script>
+
+<body style="margin: 0; height: 852px; width: 393px;">
+    <div id="root"></div>
+    <script type="module" src="/src/app/main.tsx"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const container = document.getElementById('root');
+            container.style.width = '393px';
+            container.style.height = '852px';
+
+            // Настройка Telegram Web App API
+            Telegram.WebApp.ready(function () {
+                Telegram.WebApp.setViewSize(393, 852);
+            });
+        });
+    </script>
 </body>
 
 </html>
