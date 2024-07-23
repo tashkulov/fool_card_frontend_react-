@@ -13,9 +13,12 @@ const PlayGame = () => {
     const [gameData, setGameData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [selectedCard, setSelectedCard] = useState(null); // Состояние для выбранной карты
+    const [selectedCard, setSelectedCard] = useState(null);
+    const [isAnimating, setIsAnimating] = useState(false);
+    const [cardPosition, setCardPosition] = useState(null);
+    const cardAnimationContainerRef = useRef<HTMLDivElement | null>(null);
+    const handRef = useRef<HTMLDivElement | null>(null);
 
-    const cardAnimationContainerRef = useRef(null);
 
     const fetchGameData = async () => {
         try {
@@ -24,7 +27,6 @@ const PlayGame = () => {
                     'Authorization': '461cc7f4f326092bd3967341eda52b594d0cee1932a3759e'
                 },
             });
-            console.log(response.data)
             setGameData(response.data);
             setLoading(false);
         } catch (error) {
@@ -40,8 +42,12 @@ const PlayGame = () => {
 
     useEffect(() => {
         if (selectedCard) {
-            // Сброс состояния анимации после завершения анимации
-            const timer = setTimeout(() => setSelectedCard(null), 600); // Длительность анимации
+            setIsAnimating(true);
+            const timer = setTimeout(() => {
+                setIsAnimating(false);
+                setSelectedCard(null);
+                setCardPosition(null);
+            }, 500); // Duration of animation
             return () => clearTimeout(timer);
         }
     }, [selectedCard]);
@@ -52,16 +58,28 @@ const PlayGame = () => {
         return path;
     };
 
-    const handleCardClick = (card) => {
-        setSelectedCard(card);
+
+    const handleCardClick = (card: string, e: React.MouseEvent<HTMLImageElement>) => {
+        if (e && e.currentTarget) {
+            const cardRect = e.currentTarget.getBoundingClientRect();
+            setCardPosition({
+                top: cardRect.top,
+                left: cardRect.left,
+                width: cardRect.width,
+                height: cardRect.height
+            });
+            setSelectedCard(card);
+        } else {
+            console.error('Event or event target is undefined');
+        }
     };
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 
-    const angle = 20; // Общий угол поворота для карт
-    const offset = 30; // Смещение в пикселях между картами
-    const middle = Math.floor(gameData.hand.length / 2); // Центральная карта
+    const angle = 20;
+    const offset = 30;
+    const middle = Math.floor(gameData.hand.length / 2);
 
     return (
         <>
@@ -108,9 +126,7 @@ const PlayGame = () => {
                                             <img src={GamePlay} alt="Gameplay Avatar"/>
                                         </div>
                                     </div>
-
                                 </div>
-
                             </div>
 
                             <div className="deck">
@@ -163,24 +179,30 @@ const PlayGame = () => {
                                 </div>
                             </div>
 
-                            {/* Контейнер для анимации карт */}
-                            <div ref={cardAnimationContainerRef} className="card-animation-container">
+                            <div className="bita-container" ref={cardAnimationContainerRef}>
                                 {selectedCard && (
                                     <img
                                         src={getCardImagePath(selectedCard)}
                                         alt={selectedCard}
-                                        className={`card-animation ${selectedCard ? 'animate' : ''}`}
-                                        width={64}
-                                        height={90}
+                                        className={`bita-card ${isAnimating ? 'final-position' : 'animate'}`}
+                                        style={{
+                                            top: cardPosition ? `${cardPosition.top - (cardAnimationContainerRef.current?.getBoundingClientRect().top ?? 0)}px` : '0',
+                                            left: cardPosition ? `${cardPosition.left - (cardAnimationContainerRef.current?.getBoundingClientRect().left ?? 0)}px` : '0',
+                                            width: cardPosition ? `${cardPosition.width}px` : 'auto',
+                                            height: cardPosition ? `${cardPosition.height}px` : 'auto',
+                                        }}
+                                        onAnimationEnd={() => {
+                                            setIsAnimating(false);
+                                            setSelectedCard(null);
+                                        }}
                                     />
                                 )}
                             </div>
 
-                            {/* Карты игрока */}
-                            <div className="hand">
-                                {gameData.hand.map((card, index) => {
-                                    const rotation = (index - middle) * angle; // Вычисляем угол поворота
-                                    const position = (index - middle) * offset; // Вычисляем смещение
+                            <div className="hand" ref={handRef}>
+                                {gameData.hand.map((card: string, index: number) => {
+                                    const rotation = (index - middle) * angle;
+                                    const position = (index - middle) * offset;
 
                                     return (
                                         <img
@@ -188,15 +210,17 @@ const PlayGame = () => {
                                             src={getCardImagePath(card)}
                                             alt={card}
                                             style={{
-                                                left: `calc(50% + ${position}px)`, // Устанавливаем позицию карты
-                                                transform: `rotate(${rotation}deg)`, // Устанавливаем поворот карты
-                                                '--delay': `${index * 0.2}s`, // Устанавливаем задержку анимации
+                                                left: `calc(50% + ${position}px)`,
+                                                transform: `rotate(${rotation}deg)`,
+                                                transition: 'transform 0.2s ease',
+                                                zIndex: 10,
                                             }}
-                                            onClick={() => handleCardClick(card)} // Запуск анимации при клике
+                                            onClick={(e) => handleCardClick(card, e)}
                                         />
                                     );
                                 })}
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -209,8 +233,8 @@ const PlayGame = () => {
                         </div>
                     </div>
                     <div className="play-footer-wrap">
-                        <div className="play-footer-btn block-obvodka" id="canvas">
-                            <p>Бито</p>
+                        <div className="play-footer-block">
+                            <div className="play-footer-play">Играть</div>
                         </div>
                     </div>
                 </div>

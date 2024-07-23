@@ -302,27 +302,33 @@
         right: -10px; /* Смещение карты-рубашки для наложения */
         z-index: 4;
     }
-
-
-    .card-animation-container {
+    .bita-container {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 100%;
-        height: 100%;
-        pointer-events: none; /* Предотвращает взаимодействие с контейнером */
+        width: 360px;
+        height: 240px;
+        background-color: #1d0808;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
     }
 
-    /* Стили для карты, которая анимируется */
-    .card-animation {
+    .bita-card {
         position: absolute;
-        transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
-        z-index: 10;
+        transition: all 0.5s ease; /* Smooth transition for animation */
     }
 
-    /* Добавьте класс анимации для карты */
-    .card-animation.animate {
-        transform: scale(1.5) translateY(-100vh); /* Пример анимации */
-        opacity: 0; /* Пример изменения прозрачности */
+    .bita-card.animate {
+        transform: scale(0.5); /* Scale down during animation */
     }
+
+    .bita-card.final-position {
+        transform: scale(1); /* Scale to normal size when animation ends */
+    }
+
+
+
+
