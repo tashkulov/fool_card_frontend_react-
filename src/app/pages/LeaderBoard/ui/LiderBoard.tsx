@@ -12,10 +12,14 @@ import threeMesto from "../../img/3mest.svg";
 import lidstart from "../../img/lidstar.svg";
 import referalAva from "../../img/referal-ava.svg"
 import Footer from "../../../components/Footer/Footer.tsx";
+<<<<<<< HEAD
+=======
+import {useTranslation} from "react-i18next";
+>>>>>>> 21d851925464cc27aef99cc603aa18814cbf6369
 
 const LeaderBoard = () => {
     const [leaderBoardList, setLeaderBoardList] = useState<ITypeLeaderBord[]>([]);
-
+    const { t } = useTranslation()
     useEffect(() => {
         const fetchData = async () => {
             const response = await getLeaderBoard();
@@ -96,7 +100,7 @@ const LeaderBoard = () => {
 
     return (
         <div className={cls.main}>
-            <Header text={"Лидерборд"}/>
+            <Header text={t("Лидерборд")}/>
             <img className={cls.leftSolid} src={imgLeftSvgIcons} alt=""/>
             <img className={cls.rightSolid} src={imgRightSvgIcons} alt=""/>
             <div className={cls.listLeaderBoard}>
