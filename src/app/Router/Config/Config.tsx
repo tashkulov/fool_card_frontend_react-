@@ -4,6 +4,7 @@ import PlayGame from "../../pages/play-game/play-game.tsx";
 import Kvesty from "../../pages/kwesty/Kvesty.tsx";
 import {LeaderBoard} from "../../pages/LeaderBoard";
 import NewGame from "../../pages/new-game/new-game.tsx";
+import {Referrals} from "../../pages/Referrals";
 
 enum AppRoutes {
     HOMEPAGE = "homePage",
@@ -11,6 +12,7 @@ enum AppRoutes {
     KVESTY = "kvesty",
     LEADERBOARD = "leaderBoard",
     NEWGAME = "newGame",
+    REFERRALS = "referrals",
     NOT_FOUND = "not_found",
 }
 
@@ -22,6 +24,7 @@ export const RoutePaths: Record<AppRoutes, string> = {
     [AppRoutes.KVESTY]: "/kvesty",
     [AppRoutes.LEADERBOARD]: "/leaderBoard",
     [AppRoutes.NEWGAME]: "/newGame",
+    [AppRoutes.REFERRALS]: "/referrals",
     [AppRoutes.NOT_FOUND]: "*"
 };
 
@@ -47,6 +50,10 @@ export const routerConfig: Record<AppRoutes, AppRouteProps> = {
     [AppRoutes.NEWGAME]: {
         path: RoutePaths.newGame,
         element: <NewGame/>
+    },
+    [AppRoutes.REFERRALS]: {
+        path: RoutePaths.referrals,
+        element: <Referrals/>
     },
     [AppRoutes.NOT_FOUND]: {
         path: RoutePaths.not_found,
