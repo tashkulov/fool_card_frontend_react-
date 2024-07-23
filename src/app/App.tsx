@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppRouter} from "./Router";
+import { AppRouter } from "./Router";
 import cls from "./main.module.scss";
 import "../../src/app/I18NEXT/i18n/i18n"
 
@@ -9,11 +9,10 @@ export const user = {
 };
 
 const App: React.FC = () => {
-
     return (
 
         <div className={cls.main}>
-            <AppRouter/>
+            <AppRouter />
 
         </div>
 
