@@ -7,3 +7,12 @@
   border-radius: 12px;
   border: 1px solid white;
 }
+
+.noBg {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  background: linear-gradient(180deg, rgba(79, 21, 21, 1), rgba(56, 12, 12, 1));
+  border-radius: 12px;
+  border: 1px solid white;
+}

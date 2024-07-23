@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
 import './home-page.css';
 import Footer from "../../components/Footer/Footer.tsx";
+import {Modal} from "../../components/Modal";
+import Settings from "../Settings/ui/Settings.tsx";
+import useOutsideClick from "../../hooks/useOutsideClick/useOutsideClick.ts";
+import {useTranslation} from "react-i18next";
 
 interface User {
     photo_url: string;
@@ -13,10 +17,14 @@ interface HomePageProps {
 }
 
 const HomePage: React.FC<HomePageProps> = ({ user }) => {
+    const [stateModeModalWindow, setSateModeModalWindow] = useState<boolean>(false)
+    const refModalWindow = useRef(null)
+    const {t} = useTranslation()
 
-
+    useOutsideClick(refModalWindow, () => setSateModeModalWindow(false))
 
     return (
+
         <div className="main-page-container">
             <div className="main-page-header">
                 <div className="main-page-header-content">
@@ -53,28 +61,34 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                 <div className="main-page-menu-buttons">
                     <Link to={'/inGame'}>
                         <div className="main-page-menu-button">
-                            Играть
+                            {t("Играть")}
                         </div>
                     </Link>
                     <Link to={'/leaderboard'}>
                         <div className="main-page-menu-button">
-                            Лидерборд
+                            {t("Лидерборд")}
                         </div>
                     </Link>
-                    <div className="main-page-menu-button">Рефералы</div>
-                    <div className="main-page-menu-button">Настройки</div>
+                    <Link to={"/referrals"}>
+                        <div className="main-page-menu-button">
+                            {t("Рефералы")}
+                        </div>
+                    </Link>
+
+                    <button onClick={() => setSateModeModalWindow(prev => !prev)} className="main-page-menu-button">
+                        {t("Настройки")}
+                    </button>
                 </div>
-
-
             </div>
             <div className='main-page-hands-cards'>
                 <div className='hands'>
 
                 </div>
             </div>
+            <Modal mode={stateModeModalWindow} ref={refModalWindow}>
+                <Settings/>
+            </Modal>
             <Footer/>
-
-
         </div>
     );
 };
