@@ -105,9 +105,9 @@ const CreateGameForm: React.FC = () => {
 
     return (
         <div className="main main-wrapp">
-            
-                <img className='header-illustration-img' src={headerIllustration} alt="" />
-            
+
+            <img className='header-illustration-img' src={headerIllustration} alt="" />
+
             <section className="kvesty-title new-games">
 
                 <form onSubmit={handleSubmit} className="form-new-game">
@@ -280,40 +280,6 @@ const CreateGameForm: React.FC = () => {
             </section>
 
             <Footer></Footer>
-
-            {/* <footer className="footer">
-                <div className="footer-wrapper">
-
-                    <div className="footer-menu">
-                        <div className="footer-menu-item">
-                            <a href="/">
-                                <canvas id="clubs"></canvas>
-                                <p className="punkt foot-men-p">Меню</p>
-                            </a>
-                        </div>
-                        <div className="footer-menu-item">
-                            <a href="/kvesty">
-                                <canvas id="spades"></canvas>
-                                <p className="punkt foot-men-p">Квесты</p>
-                            </a>
-                        </div>
-                        <div className="footer-menu-item">
-                            <a href="/otkrytye">
-                                <canvas id="hearts"></canvas>
-                                <p className="foot-men-p">Открытые</p>
-                            </a>
-                        </div>
-                        <div className="footer-menu-item">
-                            <a href="/sozdat-igru">
-                                <canvas id="diamond" className="active"></canvas>
-                                <p className="foot-men-p">Создать игру</p>
-                            </a>
-                        </div>
-
-                    </div>
-
-                </div>
-            </footer> */}
         </div>
     );
 };
