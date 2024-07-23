@@ -13,6 +13,8 @@ body {
 }
 
 .main-wrapp {
+    max-width: 500px;
+    min-height: 100%;
     background: linear-gradient(0.00deg, rgb(42, 42, 42), rgb(35, 35, 35) 37%, rgb(15, 15, 15) 91%, rgb(12, 12, 12) 100%);
 }
 
