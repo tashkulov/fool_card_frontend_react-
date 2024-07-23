@@ -13,8 +13,8 @@ body {
 }
 
 .main-wrapp {
-    max-width: 500px;
-    min-height: 100%;
+    min-width: 100dvw;
+    min-height: 100dvh;
     background: linear-gradient(0.00deg, rgb(42, 42, 42), rgb(35, 35, 35) 37%, rgb(15, 15, 15) 91%, rgb(12, 12, 12) 100%);
 }
 
@@ -502,7 +502,8 @@ body {
 }
 
 .header-illustration-img {
-    width: 393px;
+    object-fit: cover;
+    min-width: 100dvw;
     height: 125px;
     z-index: 30;
 }
@@ -821,6 +822,7 @@ section {
 
 .col-igrok-blocks {
     display: flex;
+    justify-content: space-around;
     width: 50%;
     margin: 0 auto;
     gap: 10px;
