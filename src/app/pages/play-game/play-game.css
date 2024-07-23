@@ -1,90 +1,236 @@
+
 .container {
-    background-color: #236245; /* Замените на нужный вам цвет */
-    height: 100vh;
-    overflow: auto; /* Позволяет прокручивать содержимое */
-    position: relative; /* Для размещения абсолютных элементов внутри контейнера */
-    margin: 0;
+    margin: 0 auto;
+    max-width: 500px;
+    position:relative;
 }
 
-.header {
+
+
+
+.wrapper {
+    background: linear-gradient(0.00deg, rgb(42, 42, 42), rgb(35, 35, 35) 37%, rgb(15, 15, 15) 91%, rgb(12, 12, 12) 100%);
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+
+
+
+
+/* play-footer  */
+
+.play-footer {
+    position: relative;
+    border: 0.95px solid rgb(0, 0, 0);
+    background: linear-gradient(0.00deg, rgb(128, 119, 109) -17.66%, rgb(145, 135, 137) 2.79%, rgb(187, 176, 174) 33.465%, rgb(215, 204, 200) 60.422%, rgb(226, 215, 210) 75.295%);
+}
+
+
+
+.play-footer-wrap {
+    padding: 15px 20px;
+    display: flex;
+}
+
+
+.play-footer-btn {
+    width: 110px;
+    height: 40px;
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgb(56, 20, 20), rgb(29, 8, 8) 100%);
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Центрирует контент по горизонтали */
+    text-align: center; /* Центрирует текст */
+}
+
+
+.play-footer-ava {
+    margin-top: -10px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.play-footer-ava img {
+    padding: 5px;
+}
+.footer-ava-wp {
+    display: inline-block;
+    border: 0.95px solid rgb(0, 0, 0);
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(0.00deg, rgb(128, 119, 109) -17.66%, rgb(145, 135, 137) 2.79%, rgb(187, 176, 174) 33.465%, rgb(215, 204, 200) 60.422%, rgb(226, 215, 210) 75.295%);
+}
+.footer-ava-roga {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+}
+.footer-ava-roga::after {
+    position: absolute;
+    content: url(../img/ava-right.svg);
+    top: 12%;
+    right: -20%;
+    z-index: -1;
+}
+.footer-ava-roga::before {
+    position: absolute;
+    content: url(../img/ava-left.svg);
+    top: 12%;
+    left: -20%;
+    z-index: -1;
+}
+/*play-header*/
+
+.play-header {
+
+    padding-bottom: 3px;
+    border: 0.95px solid rgb(0, 0, 0);
+    /* background-image: url(/../img/play-header.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; */
+    background: linear-gradient(90.00deg, rgb(128, 119, 109), rgb(145, 135, 137) 22%, rgb(187, 176, 174) 55%, rgb(215, 204, 200) 84%, rgb(226, 215, 210) 100%);
+}
+.play-header-wrapper {
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 0.95px solid rgb(0, 0, 0);
+    border-left: 0.95px solid rgb(0, 0, 0);
+    border-right: 0.95px solid rgb(0, 0, 0);
+    margin: 0 20px;
+}
+.play-header-block {
+    gap: 15px;
+    display: flex;
+    align-items: center;
+}
+.play-header-back {
+    padding: 10px;
+    border-radius: 8px;
+    background: linear-gradient(180.00deg, rgb(79, 21, 21), rgb(56, 12, 12) 100%);
+    display: flex;
+}
+.play-header-coin img {
+    width: 40px;
+    height: 40px;
+}
+.play-header-coin {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.play-header-coin p {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 120%;
+    color: #000;
+}
+.play-header-rejim {
+    padding: 5px 15px;
+    border-radius: 8px;
+    background: linear-gradient(180.00deg, rgb(79, 21, 21), rgb(56, 12, 12) 100%);
+
+}
+
+.play-header-rejim img {
+    width: 17px;
+    height: 22px;
+}
+.play-header-polosa {
+    height: 8px;
+    border-bottom: 0.95px solid rgb(0, 0, 0);
+    border-left: 0.95px solid rgb(0, 0, 0);
+    border-right: 0.95px solid rgb(0, 0, 0);
+    background: linear-gradient(182.50deg, rgb(226, 215, 210) -137.682%, rgb(215, 204, 200) -87.815%, rgb(187, 176, 174) 2.569%, rgb(145, 135, 137) 105.419%, rgb(128, 119, 109) 173.986%);
+}
+
+/* main-wrapper-plays */
+
+
+.plays{
+    position: relative;
+    z-index:2;
+}
+
+.main-wrapper-plays {
+    position: relative;
+
+}
+
+.play-wrapper{
+    position: relative;
+}
+.wrapper-plays-game {
+
+}
+
+
+.play-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0px;
+    width: 20px;
+    background-image: url(../img/Left.svg);
+    background-size: cover;
+    z-index: 1;
+}
+
+.play-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0px;
+    width: 20px;
+    background-image: url(../img/Right.svg);
+    background-size: cover;
+    z-index: 1;
+}
+
+
+.user-dumaet{
+    background: rgb(0, 187, 86);
+}
+
+.wrapper-plays-game {
+    background-color: #236245;
+    height: 730px; /* Высота на всю высоту окна просмотра */
+    width: 100%;
+
+}
+
+.players-blocks {
+    text-align: center;
+
+}
+
+.player-block img{
+    width:60px;
+    height:60px;
+}
+
+.player-block {}
+
+.footer-ava-wp {}
+
+.footer-ava-wp img {
+    padding: 5px;
+}
+
+.players-flex {
+    margin:0px 30px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 45px;
-    background-image: url("./images/Header.svg");
-    background-repeat: no-repeat; /* Добавлено */
-    padding: 0 20px; /* Внутренние отступы для header */
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000; /* Убедитесь, что header находится выше других элементов */
-    margin: 0;
-
-}
-
-.stafka {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Расстояние между иконкой и текстом */
-    color: #fff; /* Цвет текста */
-    margin: 0;
-
-}
-
-.stafka img {
-    margin-right: 10px;
-}
-
-.stafka h2 {
-    margin: 0;
-    font-size: 24px;
-}
-
-.game-mode {
-    display: flex;
-    gap: 5px; /* Расстояние между картами */
-    width: 101px;
-    height: 29px;
-    background-color: #380C0C;
-    border-radius: 10px;
-    align-items: center;
-    justify-content: center;
-}
-
-.game-mode img {
-    display: block;
-}
-
-.left-side {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    position: absolute;
-    left: 0;
-    top: 30px; /* Отступ сверху, чтобы не перекрывать header */
-    bottom: 0;
-
-    background-image: url("./images/ugol.svg");
-    background-repeat: no-repeat; /* Добавлено */
-}
-
-.right-side {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    position: absolute;
-    right: 0;
-    top: 30px; /* Отступ сверху, чтобы не перекрывать header */
-    bottom: 0;
-    background-image: url("./images/Right Safe Area.svg");
-    background-repeat: no-repeat; /* Добавлено */
-}
-
-.illustration {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    position: relative;
 }
