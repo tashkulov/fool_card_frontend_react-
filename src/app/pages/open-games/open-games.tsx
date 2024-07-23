@@ -1,14 +1,11 @@
 import React from 'react';
 import './open-games.css'; // подключите стили
-import Header from '../Widgets/Header/ui/Header';
-import Footer from '../../components/Footer/Footer';
 import card1 from "../../../assets/img/card1.svg";
 import card2 from "../../../assets/img/card2.svg";
 import card3 from "../../../assets/img/card3.svg";
 import men from "../../../assets/img/men.svg";
 import arrow from "../../../assets/img/strelka.svg";
 import exp from "../../../assets/img/otkrytye-opit.svg";
-import img from "../../../assets/img/titus-wrapper.svg"
 import SkeletonPage from '../../components/SkeletonPage/ui/SkeletPage';
 
 interface openGameProps {
