@@ -162,7 +162,8 @@
     align-items: center;
     font-family: "Cormorant Infant", serif;
     font-weight: bold;
-
+    border: none;
+    background-color: transparent;
     background-image: url('./images/main-page-menu-button.png');
     width: 149px;
     height: 65px;

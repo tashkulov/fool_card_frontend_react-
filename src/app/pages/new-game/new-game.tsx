@@ -7,12 +7,14 @@ import Minus from '../../../assets/img/minus.svg';
 import Plus from '../../../assets/img/pluss.svg';
 import Check from "../../../assets/img/check_.svg"
 import Footer from '../../components/Footer/Footer';
+import {useTranslation} from "react-i18next";
 
 
 // Define the types for the props and states
 type RiveAnimation = { play: () => void };
 
 const CreateGameForm: React.FC = () => {
+    const {t} = useTranslation()
     const [betAmount, setBetAmount] = useState<number>(1200);
     const [selectedGameMode, setSelectedGameMode] = useState<string>('');
     const [selectedPlayerCount, setSelectedPlayerCount] = useState<string>('');
@@ -112,7 +114,7 @@ const CreateGameForm: React.FC = () => {
 
                 <form onSubmit={handleSubmit} className="form-new-game">
                     <div className="kvesty-title-wrapper new-game-wrapper title-wrapper">
-                        <p className="new-game-stavkap">Ваша ставка</p>
+                        <p className="new-game-stavkap">{t("Ваша ставка")}</p>
                         <div className="block-obvodka new-game-sts">
                             <img src={NewBet} alt="" />
                             <div className='bet-value'>{betAmount}</div>
@@ -148,7 +150,7 @@ const CreateGameForm: React.FC = () => {
                     </div>
 
                     <div className="rejim-igry">
-                        <p className="rejim-igry-p">Режим игры</p>
+                        <p className="rejim-igry-p">{t("Режим игры")}</p>
                         <div className="rejim-igry-blocks-flex">
                             <div className='game-mode-selector-container'>
                                 {['Подкидной', 'Переводной'].map((mode) => (
@@ -231,7 +233,7 @@ const CreateGameForm: React.FC = () => {
                     </div>
 
                     <div className="col-igrok">
-                        <p className="rejim-igry-p">Количество игроков</p>
+                        <p className="rejim-igry-p">{t("Количество игроков")}</p>
                         <div className="col-igrok-blocks">
                             {[2, 3, 4].map((count) => (
                                 <div
@@ -268,10 +270,10 @@ const CreateGameForm: React.FC = () => {
                                         checked={isPrivate}
                                         onChange={handlePrivateGameChange} />
                                     <span className="checkmark block-obvodka"></span>
-                                    <p>Приватная игра</p>
+                                    <p>{t("Приватная игра")}</p>
                                 </label>
 
-                                <input type="submit" className="create-kn block-obvodka" value="Создать" />
+                                <input type="submit" className="create-kn block-obvodka" value={t("Создать")} />
                             </div>
                         </div>
                     </div>
