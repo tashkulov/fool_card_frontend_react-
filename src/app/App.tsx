@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import React from 'react';
-import {AppRouter} from "./Router";
+import { AppRouter } from "./Router";
 import cls from "./main.module.scss";
 
 export const user = {
@@ -9,10 +10,23 @@ export const user = {
 
 const App: React.FC = () => {
 
+    useEffect(() => {
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.ready(() => {
+                window.Telegram.WebApp.setViewSize(393, 852);
+            });
+
+            window.Telegram.WebApp.onEvent('viewportChanged', () => {
+                window.Telegram.WebApp.setViewSize(393, 852);
+            });
+        }
+    }, []);
+
+
     return (
 
         <div className={cls.main}>
-            <AppRouter/>
+            <AppRouter />
 
         </div>
 
