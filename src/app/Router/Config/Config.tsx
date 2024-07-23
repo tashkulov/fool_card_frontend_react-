@@ -5,13 +5,15 @@ import Kvesty from "../../pages/kwesty/Kvesty.tsx";
 import {LeaderBoard} from "../../pages/LeaderBoard";
 import NewGame from "../../pages/new-game/new-game.tsx";
 import {Referrals} from "../../pages/Referrals";
+import OpenGames from "../../pages/open-games/open-games.tsx";
 
 enum AppRoutes {
     HOMEPAGE = "homePage",
     PLAYGAME = "inGame",
-    KVESTY = "kvesty",
+    QUESTS = "quests",
     LEADERBOARD = "leaderBoard",
     NEWGAME = "newGame",
+    OPENGAMES = "open-games",
     REFERRALS = "referrals",
     NOT_FOUND = "not_found",
 }
@@ -21,10 +23,11 @@ export type AppRouteProps = RouteProps &NonNullable<unknown>
 export const RoutePaths: Record<AppRoutes, string> = {
     [AppRoutes.HOMEPAGE]: "",
     [AppRoutes.PLAYGAME]: "/inGame",
-    [AppRoutes.KVESTY]: "/kvesty",
     [AppRoutes.LEADERBOARD]: "/leaderBoard",
+    [AppRoutes.OPENGAMES]: "/open-games",
     [AppRoutes.NEWGAME]: "/newGame",
     [AppRoutes.REFERRALS]: "/referrals",
+    [AppRoutes.QUESTS]: "/quests",
     [AppRoutes.NOT_FOUND]: "*"
 };
 
@@ -38,9 +41,12 @@ export const routerConfig: Record<AppRoutes, AppRouteProps> = {
         path: RoutePaths.inGame,
         element: <PlayGame/>
     },
-
-    [AppRoutes.KVESTY]: {
-        path: RoutePaths.kvesty,
+    [AppRoutes.OPENGAMES]: {
+        path: RoutePaths["open-games"],
+        element: <OpenGames />,
+    },
+    [AppRoutes.QUESTS]: {
+        path: RoutePaths.quests,
         element: <Kvesty/>
     },
     [AppRoutes.LEADERBOARD]: {
