@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const Footer: React.FC = () => {
     const { t } = useTranslation()
@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
                 </Link>
             </div>
             <div className="main-page-navbar-option quests">
-                <Link to="/kvesty" className="main-page-navbar-link">
+                <Link to="/quests" className="main-page-navbar-link">   
                     <div className="quests-icon"></div>
                     <h1>
                         {t("Квесты")}
@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
                 </Link>
             </div>
             <div className="main-page-navbar-option open">
-                <Link to="#" className="main-page-navbar-link">
+                <Link to="/open-games" className="main-page-navbar-link">
                     <div className="open-icon"></div>
                     <h1>
                         {t("Открытые")}
