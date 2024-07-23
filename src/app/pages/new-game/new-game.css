@@ -502,7 +502,7 @@ body {
 .header-illustration-img {
     width: 393px;
     height: 125px;
-    z-index: 999;
+    z-index: 30;
 }
 
 .otkrytye-block-opit {
@@ -577,6 +577,10 @@ body {
 .kvesty-title-wrapper {
     height: 73px;
     padding: 0;
+}
+
+section {
+    z-index: 5;
 }
 
 .bet-value {
@@ -740,6 +744,10 @@ body {
     display: none;
 }
 
+.rejim-check.gameModeSelected {
+    z-index: 2;
+}
+
 .block-obvodka {}
 
 .checkbox-container {}
@@ -816,7 +824,12 @@ body {
     gap: 10px;
 }
 
+.col-igrok-block.selected {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 .col-igrok-block {
+    transition: all 0.3s ease;
     display: flex;
     justify-content: center;
     align-items: center;

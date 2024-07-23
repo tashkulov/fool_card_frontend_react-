@@ -11,6 +11,7 @@ import secondMesto from "../../img/2mest.svg";
 import threeMesto from "../../img/3mest.svg";
 import lidstart from "../../img/lidstar.svg";
 import referalAva from "../../img/referal-ava.svg"
+import Footer from "../../../components/Footer/Footer.tsx";
 
 const LeaderBoard = () => {
     const [leaderBoardList, setLeaderBoardList] = useState<ITypeLeaderBord[]>([]);
@@ -19,9 +20,21 @@ const LeaderBoard = () => {
         const fetchData = async () => {
             const response = await getLeaderBoard();
             if (response && response.data) {
+                console.log(response)
                 setLeaderBoardList(response.data);
                 console.log(leaderBoardList)
             } else {
+                const arr = [{
+                    experience: 2000,
+                    username: "Pain"
+                },{
+                    experience: 1500,
+                    username: "Arsen"
+                },{
+                    experience: 900,
+                    username: "test"
+                }]
+                setLeaderBoardList(arr)
                 console.log("что не так с данными из getLeaderBoard", response);
             }
         };
@@ -108,6 +121,7 @@ const LeaderBoard = () => {
 
                 ))}
             </div>
+            <Footer/>
         </div>
     );
 }
