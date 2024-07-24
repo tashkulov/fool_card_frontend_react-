@@ -37,7 +37,6 @@ const PlayGame = () => {
     const [isAnimating, setIsAnimating] = useState(false);
     const cardAnimationContainerRef = useRef<HTMLDivElement | null>(null);
     const handRef = useRef<HTMLDivElement | null>(null);
-    const [bitaCards, setBitaCards] = useState<string[]>([]);
 
     const fetchGameData = async () => {
         try {
