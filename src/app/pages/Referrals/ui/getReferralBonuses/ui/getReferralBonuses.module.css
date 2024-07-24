@@ -1,4 +1,19 @@
-<<<<<<< HEAD
+.main {
+  padding: 15px 15px 0;
+  text-align: center;
+}
+.main .bonuses {
+  font-size: 54px;
+}
+.main .getBonuses {
+  font-size: 16px;
+  text-align: center;
+}
+.main .loading {
+  padding: 25px 35px 35.92px;
+  font-size: 24px;
+}
+
 .main {
   padding: 15px 15px 0;
   text-align: center;
@@ -16,22 +31,3 @@
 }
 
 /*# sourceMappingURL=getReferralBonuses.module.css.map */
-=======
-.main {
-  padding: 15px 15px 0;
-  text-align: center;
-}
-.main .bonuses {
-  font-size: 54px;
-}
-.main .getBonuses {
-  font-size: 16px;
-  text-align: center;
-}
-.main .loading {
-  padding: 25px 35px 35.92px;
-  font-size: 24px;
-}
-
-/*# sourceMappingURL=getReferralBonuses.module.css.map */
->>>>>>> 21d851925464cc27aef99cc603aa18814cbf6369

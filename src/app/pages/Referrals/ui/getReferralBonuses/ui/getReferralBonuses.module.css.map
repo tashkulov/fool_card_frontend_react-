@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-{"version":3,"sourceRoot":"","sources":["getReferralBonuses.module.scss"],"names":[],"mappings":"AAAA;EACE;EACA;;AAEA;EACE;;AAGF;EACE;EACA;;AAGF;EACE;EACA","file":"getReferralBonuses.module.css"}
-=======
-{"version":3,"sourceRoot":"","sources":["getReferralBonuses.module.scss"],"names":[],"mappings":"AAAA;EACE;EACA;;AAEA;EACE;;AAGF;EACE;EACA;;AAGF;EACE;EACA","file":"getReferralBonuses.module.css"}
->>>>>>> 21d851925464cc27aef99cc603aa18814cbf6369
+{"version":3,"sourceRoot":"","sources":["getReferralBonuses.module.scss"],"names":[],"mappings":"AAAA;EACE;EACA;;AAEA;EACE;;AAGF;EACE;EACA;;AAGF;EACE;EACA;;;AAGJ;EACE;EACA;;AAEA;EACE;;AAGF;EACE;EACA;;AAGF;EACE;EACA","file":"getReferralBonuses.module.css"}
