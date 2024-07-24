@@ -17,7 +17,14 @@
 }
 .main-page-navbar a {
     text-decoration: none;
-    color: black;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+
+    * {
+        color: black;
+    }
 }
 .main-page-navbar-option {
     display: flex;
@@ -38,25 +45,33 @@ h1 {
 .main-page-navbar-option .menu-icon {
     width: 44px;
     height: 46px;
-    background-image: url('../../pages/home-page/images/nav-menu.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('../../pages/home-page/images/frame8.svg');
 }
 
 .main-page-navbar-option .quests-icon {
-    width: 49px;
+    width: 46px;
     height: 46px;
-    background-image: url('../../pages/home-page/images/nav-quests.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('../../pages/home-page/images/frame9.svg');
 }
 
 .main-page-navbar-option .open-icon {
     width: 45px;
     height: 46px;
+    background-repeat: no-repeat;
+    background-size: contain;
     background-image: url('../../pages/home-page/images/nav-open.svg');
 }
 
 .main-page-navbar-option .new-game-icon {
-    width: 40px;
+    width: 37px;
     height: 46px;
-    background-image: url('../../pages/home-page/images/nav-new-game.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('../../pages/home-page/images/frame11.svg');
 }
 @media screen and (max-width: 600px) {
     .main-page-container {

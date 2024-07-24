@@ -17,13 +17,13 @@ import {useTranslation} from "react-i18next";
 const LeaderBoard = () => {
     const [leaderBoardList, setLeaderBoardList] = useState<ITypeLeaderBord[]>([]);
     const { t } = useTranslation()
+
     useEffect(() => {
         const fetchData = async () => {
-            const response = await getLeaderBoard();
+            const response = await getLeaderBoard()
             if (response && response.data) {
                 console.log(response)
-                setLeaderBoardList(response.data);
-                console.log(leaderBoardList)
+                setLeaderBoardList(response.data)
             } else {
                 const arr = [{
                     experience: 2000,
@@ -36,7 +36,7 @@ const LeaderBoard = () => {
                     username: "test"
                 }]
                 setLeaderBoardList(arr)
-                console.log("что не так с данными из getLeaderBoard", response);
+                console.log("что не так с данными из getLeaderBoard", response)
             }
         };
 
