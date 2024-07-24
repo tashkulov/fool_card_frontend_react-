@@ -20,6 +20,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    z-index: 3;
 }
 
 
@@ -122,15 +123,15 @@
     background-image: url('./images/default-avatar.png');
 }
 
-.main-page-hands-bg {
+.main-page-hands-cards {
     position: fixed;
     background-image: url("./images/main-page-hand-bg.svg");
     background-repeat: no-repeat;
     background-size: cover;
     height: 614px;
     width: 100%;
-    margin-bottom: 30px;
     bottom: 0;
+    z-index: 0;
 }
 
 .main-page-menu {
@@ -138,7 +139,7 @@
     justify-content: center;
     color: black;
     margin-top: 10px;
-    z-index: 0;
+    z-index: 1;
     background-image: url('./images/main-page-menu-bg.png');
     width: 267px;
     height: 540px;
