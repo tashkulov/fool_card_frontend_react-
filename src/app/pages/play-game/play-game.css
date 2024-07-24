@@ -155,7 +155,7 @@
 
 }
 
-.play-wrapper{
+.play-wrapper-game{
     position: relative;
 }
 .wrapper-plays-game {
@@ -163,7 +163,7 @@
 }
 
 
-.play-wrapper::before {
+.play-wrapper-game::before {
     content: '';
     position: absolute;
     top: 0;
@@ -172,10 +172,10 @@
     width: 20px;
     background-image: url(../img/Left.svg);
     background-size: cover;
-    z-index: 1;
+    z-index: 5;
 }
 
-.play-wrapper::after {
+.play-wrapper-game::after {
     content: '';
     position: absolute;
     top: 0;
@@ -184,7 +184,7 @@
     width: 20px;
     background-image: url(../img/Right.svg);
     background-size: cover;
-    z-index: 0;
+    z-index: 5;
 }
 
 
@@ -299,7 +299,6 @@
     transform: translate(-50%, -50%);
     width: 360px; /* Ширина контейнера */
     height: 240px; /* Высота контейнера */
-    background-color: #1d0808;
     display: flex;
     flex-wrap: wrap; /* Позволяет картам переноситься на следующую строку */
     justify-content: center; /* Центрирование карт по горизонтали */
@@ -327,4 +326,12 @@
 
 
 
+.hand .card-to-bita {
+    position: absolute;
+    transition: transform 0.5s ease;
+}
+
+.bita-container .final-position {
+    transform: translateX(0) translateY(0); /* Настройте положение по вашему усмотрению */
+}
 

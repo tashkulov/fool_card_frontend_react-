@@ -9,7 +9,6 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
 
-// Define a type for the game data structure
 interface GameData {
     trump_card: string;
     hand: string[];
@@ -37,6 +36,8 @@ const PlayGame = () => {
     const [isAnimating, setIsAnimating] = useState(false);
     const cardAnimationContainerRef = useRef<HTMLDivElement | null>(null);
     const handRef = useRef<HTMLDivElement | null>(null);
+    const [cardsInBita, setCardsInBita] = useState<string[]>([]);
+    const [bitaCards, setBitaCards] = useState<string[]>([]);
 
     const fetchGameData = async () => {
         try {
@@ -94,20 +95,18 @@ const PlayGame = () => {
         const path = new URL(`../../../assets/cards/${suit}/${card}.svg`, import.meta.url).href;
         return path;
     };
-    const handleCardClick = (card: string, e: React.MouseEvent<HTMLImageElement>) => {
+
+    const handleCardClick = async (card: string, e: React.MouseEvent<HTMLImageElement>) => {
         if (!cardAnimationContainerRef.current || !handRef.current) return;
 
+        setCardsInBita(prevCards => [...prevCards, card]);
 
-        // Клонируем карту для анимации
         const cardClone = e.currentTarget.cloneNode(true) as HTMLImageElement;
         cardClone.classList.add('bita-card', 'animate');
         document.body.appendChild(cardClone);
 
-
-
         setSelectedCard(card);
 
-        // Удаление карты из hand
         e.currentTarget.style.display = 'none';
 
         setTimeout(() => {
@@ -117,11 +116,17 @@ const PlayGame = () => {
             cardClone.classList.remove('animate');
             cardClone.classList.add('final-position');
 
-            // Восстановление карты в hand
             e.currentTarget.style.display = 'block';
         }, 500);
     };
 
+    const handleBitaButtonClick = () => {
+        if (cardAnimationContainerRef.current) {
+            const cards = Array.from(cardAnimationContainerRef.current.children) as HTMLImageElement[];
+            setBitaCards(prevCards => [...prevCards, ...cards.map(card => card.src)]);
+            cardAnimationContainerRef.current.innerHTML = '';
+        }
+    };
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
@@ -142,7 +147,7 @@ const PlayGame = () => {
                                 </a>
                                 <div className="play-header-coin">
                                     <img src={coins} alt="Coins" />
-                                    <p>{betValue !== null ? `${betValue}` : 'N/A'}</p> {/* Display the bet value */}
+                                    <p>{betValue !== null ? `${betValue}` : 'N/A'}</p>
                                 </div>
                             </div>
                             <div className="play-header-rejim block-obvodka">
@@ -155,7 +160,7 @@ const PlayGame = () => {
                     <div className="play-header-polosa"></div>
                     <div className="play-header-polosa"></div>
                 </div>
-                <div className="main play-wrapper play-krug">
+                <div className="main play-wrapper-game play-krug">
                     <div className="main-wrapper-plays">
                         <div className="wrapper-plays-header"></div>
                         <div className="wrapper-plays-game">
@@ -163,7 +168,6 @@ const PlayGame = () => {
                                 <div className="player-block user-dumaet footer-ava-wp">
                                     <img src={GamePlay} alt="Gameplay Avatar"/>
                                 </div>
-
                                 <div className="players-flex">
                                     <div className="player-block footer-ava-wp">
                                         <img src={GamePlay} alt="Gameplay Avatar"/>
@@ -200,30 +204,16 @@ const PlayGame = () => {
 
                         <div className="bita">
                             <div className="card-container">
-                                <img
-                                    key={'bita1'}
-                                    src={back_card}
-                                    alt={"back_card"}
-                                    width={64}
-                                    height={90}
-                                    className="back_card1"
-                                />
-                                <img
-                                    key={'bita2'}
-                                    src={back_card}
-                                    alt={"back_card"}
-                                    width={64}
-                                    height={90}
-                                    className="back_card2"
-                                />
-                                <img
-                                    key={'bita3'}
-                                    src={back_card}
-                                    alt={"back_card"}
-                                    width={64}
-                                    height={90}
-                                    className="back_card3"
-                                />
+                                {bitaCards.map((cardSrc, index) => (
+                                    <img
+                                        key={index}
+                                        src={cardSrc}
+                                        alt={`bita-card-${index}`}
+                                        width={64}
+                                        height={90}
+                                        className={`bita-card${isAnimating ? ' animate' : ''}`}
+                                    />
+                                ))}
                             </div>
                         </div>
 
@@ -240,7 +230,6 @@ const PlayGame = () => {
                                 />
                             )}
                         </div>
-
 
                         <div className="hand" ref={handRef}>
                             {gameData && gameData.hand.map((card: string, index: number) => {
@@ -277,7 +266,7 @@ const PlayGame = () => {
                     </div>
                     <div className="play-footer-wrap">
                         <div className="play-footer-block">
-                            <div className="play-footer-play">Играть</div>
+                            <div className="play-footer-btn" onClick={handleBitaButtonClick}>Бито</div>
                         </div>
                     </div>
                 </div>
