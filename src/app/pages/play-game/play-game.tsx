@@ -49,7 +49,7 @@ const PlayGame = () => {
             const timer = setTimeout(() => {
                 setIsAnimating(false);
                 setSelectedCard(null);
-            }, 500); // Duration of animation
+            }, 500);
             return () => clearTimeout(timer);
         }
     }, [selectedCard]);
@@ -74,10 +74,9 @@ const PlayGame = () => {
 
         e.currentTarget.style.transform = `translate(${translateX}px, ${translateY}px) scale(1.5)`;
 
-        // Clear the transform after the animation
         setTimeout(() => {
             e.currentTarget.style.transform = '';
-        }, 500); // Same duration as your animation
+        }, 500);
     };
 
     if (loading) return <div>Loading...</div>;
