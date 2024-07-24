@@ -1,8 +1,4 @@
 
-
-
-
-
 .wrapper {
     background: linear-gradient(0.00deg, rgb(42, 42, 42), rgb(35, 35, 35) 37%, rgb(15, 15, 15) 91%, rgb(12, 12, 12) 100%);
     display: flex;
@@ -188,7 +184,7 @@
     width: 20px;
     background-image: url(../img/Right.svg);
     background-size: cover;
-    z-index: 1;
+    z-index: 0;
 }
 
 
@@ -301,26 +297,32 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 360px;
-    height: 240px;
+    width: 360px; /* Ширина контейнера */
+    height: 240px; /* Высота контейнера */
     background-color: #1d0808;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap; /* Позволяет картам переноситься на следующую строку */
+    justify-content: center; /* Центрирование карт по горизонтали */
+    align-items: center; /* Центрирование карт по вертикали */
     overflow: hidden;
+    gap: 10px; /* Расстояние между картами */
 }
 
 .bita-card {
-    position: absolute;
-    transition: all 0.5s ease; /* Smooth transition for animation */
+    width: 64px; /* Ширина карты */
+    height: 90px; /* Высота карты */
+    /* Убедитесь, что ширина и высота карты соответствуют вашему макету */
+    transition: transform 0.5s ease; /* Плавный переход для анимации */
+    z-index: 6;
 }
 
+/* Убедитесь, что при анимации карты не перекрывают друг друга */
 .bita-card.animate {
-    transform: scale(0.5); /* Scale down during animation */
+    transform: scale(0.5); /* Уменьшение размера при анимации */
 }
 
 .bita-card.final-position {
-    transform: scale(1); /* Scale to normal size when animation ends */
+    transform: scale(1); /* Обычный размер после анимации */
 }
 
 

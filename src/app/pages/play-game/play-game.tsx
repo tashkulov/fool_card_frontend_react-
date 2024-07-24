@@ -15,10 +15,24 @@ interface GameData {
     hand: string[];
 }
 
+interface GameListItem {
+    bet_value: number;
+    card_amount: number;
+    participants_number: number;
+    access_type: string;
+    status: string;
+    game_mode: string;
+    toss_mode: string;
+    game_ending_type: string;
+    id: number;
+    created_by: number;
+}
+
 const PlayGame = () => {
     const [gameData, setGameData] = useState<GameData | null>(null);
+    const [betValue, setBetValue] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
-    const [error] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
     const [isAnimating, setIsAnimating] = useState(false);
     const cardAnimationContainerRef = useRef<HTMLDivElement | null>(null);
@@ -28,19 +42,40 @@ const PlayGame = () => {
         try {
             const response = await axios.get<GameData>('http://77.222.37.34:8001/v1/games/6/get_current_table', {
                 headers: {
-                    'Authorization': '461cc7f4f326092bd3967341eda52b594d0cee1932a3759e'
+                    'Authorization': 'ea5419dc0909da30f8ceafd76149b7e0e38b5b5e91830923'
                 },
             });
             setGameData(response.data);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching game data:', error);
+            setError('Failed to load game data');
             setLoading(false);
+        }
+    };
+
+    const fetchGameList = async () => {
+        try {
+            const response = await axios.get<GameListItem[]>('http://77.222.37.34:8001/v1/games', {
+                headers: {
+                    'Authorization': 'ea5419dc0909da30f8ceafd76149b7e0e38b5b5e91830923'
+                },
+            });
+            const game = response.data.find(game => game.id === 6);
+            if (game) {
+                setBetValue(game.bet_value);
+            } else {
+                setError('Game not found');
+            }
+        } catch (error) {
+            console.error('Error fetching game list:', error);
+            setError('Failed to load game list');
         }
     };
 
     useEffect(() => {
         fetchGameData();
+        fetchGameList();
     }, []);
 
     useEffect(() => {
@@ -59,25 +94,34 @@ const PlayGame = () => {
         const path = new URL(`../../../assets/cards/${suit}/${card}.svg`, import.meta.url).href;
         return path;
     };
-
     const handleCardClick = (card: string, e: React.MouseEvent<HTMLImageElement>) => {
         if (!cardAnimationContainerRef.current || !handRef.current) return;
 
-        const cardRect = e.currentTarget.getBoundingClientRect();
+
+        // Клонируем карту для анимации
+        const cardClone = e.currentTarget.cloneNode(true) as HTMLImageElement;
+        cardClone.classList.add('bita-card', 'animate');
+        document.body.appendChild(cardClone);
+
+
 
         setSelectedCard(card);
 
-        const bitaContainerRect = cardAnimationContainerRef.current.getBoundingClientRect();
-
-        const translateX = bitaContainerRect.left - cardRect.left;
-        const translateY = bitaContainerRect.top - cardRect.top;
-
-        e.currentTarget.style.transform = `translate(${translateX}px, ${translateY}px) scale(1.5)`;
+        // Удаление карты из hand
+        e.currentTarget.style.display = 'none';
 
         setTimeout(() => {
-            e.currentTarget.style.transform = '';
+            setIsAnimating(false);
+            setSelectedCard(null);
+            cardAnimationContainerRef.current?.appendChild(cardClone);
+            cardClone.classList.remove('animate');
+            cardClone.classList.add('final-position');
+
+            // Восстановление карты в hand
+            e.currentTarget.style.display = 'block';
         }, 500);
     };
+
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
@@ -98,7 +142,7 @@ const PlayGame = () => {
                                 </a>
                                 <div className="play-header-coin">
                                     <img src={coins} alt="Coins" />
-                                    <p>4K</p>
+                                    <p>{betValue !== null ? `${betValue}` : 'N/A'}</p> {/* Display the bet value */}
                                 </div>
                             </div>
                             <div className="play-header-rejim block-obvodka">
@@ -197,6 +241,7 @@ const PlayGame = () => {
                             )}
                         </div>
 
+
                         <div className="hand" ref={handRef}>
                             {gameData && gameData.hand.map((card: string, index: number) => {
                                 const rotation = (index - middle) * angle;
@@ -221,6 +266,7 @@ const PlayGame = () => {
 
                     </div>
                 </div>
+
                 <div className="play-footer">
                     <div className="play-footer-ava">
                         <div className="footer-ava-roga">
