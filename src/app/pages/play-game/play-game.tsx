@@ -18,7 +18,7 @@ interface GameData {
 const PlayGame = () => {
     const [gameData, setGameData] = useState<GameData | null>(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const [error] = useState<string | null>(null);
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
     const [isAnimating, setIsAnimating] = useState(false);
     const cardAnimationContainerRef = useRef<HTMLDivElement | null>(null);
@@ -35,7 +35,6 @@ const PlayGame = () => {
             setLoading(false);
         } catch (error) {
             console.error('Error fetching game data:', error);
-            setError('Failed to fetch game data.');
             setLoading(false);
         }
     };
@@ -64,13 +63,10 @@ const PlayGame = () => {
     const handleCardClick = (card: string, e: React.MouseEvent<HTMLImageElement>) => {
         if (!cardAnimationContainerRef.current || !handRef.current) return;
 
-        // Determine the position of the clicked card
         const cardRect = e.currentTarget.getBoundingClientRect();
 
-        // Set the selected card and its position for animation
         setSelectedCard(card);
 
-        // Set the position where the card should animate to (center of bita-container)
         const bitaContainerRect = cardAnimationContainerRef.current.getBoundingClientRect();
 
         const translateX = bitaContainerRect.left - cardRect.left;
