@@ -12,13 +12,11 @@ import back_card from '../../../assets/cards/back/back_3.svg';
 const PlayGame = () => {
     const [gameData, setGameData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [selectedCard, setSelectedCard] = useState(null);
+    const [error, ] = useState(null); // You didn't assign setError
+    const [selectedCard, setSelectedCard] = useState<string | null>(null);
     const [isAnimating, setIsAnimating] = useState(false);
-    const [cardPosition, setCardPosition] = useState(null);
     const cardAnimationContainerRef = useRef<HTMLDivElement | null>(null);
     const handRef = useRef<HTMLDivElement | null>(null);
-
 
     const fetchGameData = async () => {
         try {
@@ -32,7 +30,6 @@ const PlayGame = () => {
         } catch (error) {
             console.error('Error fetching game data:', error);
             setLoading(false);
-            setError('Failed to fetch game data');
         }
     };
 
@@ -46,32 +43,38 @@ const PlayGame = () => {
             const timer = setTimeout(() => {
                 setIsAnimating(false);
                 setSelectedCard(null);
-                setCardPosition(null);
             }, 500); // Duration of animation
             return () => clearTimeout(timer);
         }
     }, [selectedCard]);
 
-    const getCardImagePath = (card) => {
+    const getCardImagePath = (card: string) => {
         const [suit] = card.split('_');
         const path = new URL(`../../../assets/cards/${suit}/${card}.svg`, import.meta.url).href;
         return path;
     };
 
-
     const handleCardClick = (card: string, e: React.MouseEvent<HTMLImageElement>) => {
-        if (e && e.currentTarget) {
-            const cardRect = e.currentTarget.getBoundingClientRect();
-            setCardPosition({
-                top: cardRect.top,
-                left: cardRect.left,
-                width: cardRect.width,
-                height: cardRect.height
-            });
-            setSelectedCard(card);
-        } else {
-            console.error('Event or event target is undefined');
-        }
+        if (!cardAnimationContainerRef.current || !handRef.current) return;
+
+        // Determine the position of the clicked card
+        const cardRect = e.currentTarget.getBoundingClientRect();
+
+        // Set the selected card and its position for animation
+        setSelectedCard(card);
+
+        // Set the position where the card should animate to (center of bita-container)
+        const bitaContainerRect = cardAnimationContainerRef.current.getBoundingClientRect();
+
+        const translateX = bitaContainerRect.left - cardRect.left;
+        const translateY = bitaContainerRect.top - cardRect.top;
+
+        e.currentTarget.style.transform = `translate(${translateX}px, ${translateY}px) scale(1.5)`;
+
+        // Clear the transform after the animation
+        setTimeout(() => {
+            e.currentTarget.style.transform = '';
+        }, 500); // Same duration as your animation
     };
 
     if (loading) return <div>Loading...</div>;
@@ -79,14 +82,13 @@ const PlayGame = () => {
 
     const angle = 20;
     const offset = 30;
-    const middle = Math.floor(gameData.hand.length / 2);
+    const middle = gameData && Math.floor(gameData.hand.length / 2);
 
     return (
         <>
             <div className="wrapper">
                 <div className="plays">
                     <section className="play-header">
-                        <div className="container">
                             <div className="play-header-wrapper">
                                 <div className="play-header-block">
                                     <a className="play-header-back block-obvodka">
@@ -103,14 +105,12 @@ const PlayGame = () => {
                                     <img src={card3} alt="Card 3" />
                                 </div>
                             </div>
-                        </div>
                     </section>
                     <div className="play-header-polosa"></div>
                     <div className="play-header-polosa"></div>
                 </div>
                 <div className="main play-wrapper play-krug">
                     <div className="main-wrapper-plays">
-                        <div className="container">
                             <div className="wrapper-plays-header"></div>
                             <div className="wrapper-plays-game">
                                 <div className="players-blocks">
@@ -131,14 +131,16 @@ const PlayGame = () => {
 
                             <div className="deck">
                                 <div className="card-container">
-                                    <img
-                                        key={'trump_card'}
-                                        src={getCardImagePath(gameData.trump_card)}
-                                        alt={"card"}
-                                        width={64}
-                                        height={90}
-                                        className="trump-card"
-                                    />
+                                    {gameData && (
+                                        <img
+                                            key={'trump_card'}
+                                            src={getCardImagePath(gameData.trump_card)}
+                                            alt={"card"}
+                                            width={64}
+                                            height={90}
+                                            className="trump-card"
+                                        />
+                                    )}
                                     <img
                                         key={'back_card'}
                                         src={back_card}
@@ -184,13 +186,7 @@ const PlayGame = () => {
                                     <img
                                         src={getCardImagePath(selectedCard)}
                                         alt={selectedCard}
-                                        className={`bita-card ${isAnimating ? 'final-position' : 'animate'}`}
-                                        style={{
-                                            top: cardPosition ? `${cardPosition.top - (cardAnimationContainerRef.current?.getBoundingClientRect().top ?? 0)}px` : '0',
-                                            left: cardPosition ? `${cardPosition.left - (cardAnimationContainerRef.current?.getBoundingClientRect().left ?? 0)}px` : '0',
-                                            width: cardPosition ? `${cardPosition.width}px` : 'auto',
-                                            height: cardPosition ? `${cardPosition.height}px` : 'auto',
-                                        }}
+                                        className={`bita-card ${isAnimating ? 'animate' : ''}`}
                                         onAnimationEnd={() => {
                                             setIsAnimating(false);
                                             setSelectedCard(null);
@@ -200,7 +196,7 @@ const PlayGame = () => {
                             </div>
 
                             <div className="hand" ref={handRef}>
-                                {gameData.hand.map((card: string, index: number) => {
+                                {gameData && gameData.hand.map((card: string, index: number) => {
                                     const rotation = (index - middle) * angle;
                                     const position = (index - middle) * offset;
 
@@ -221,7 +217,6 @@ const PlayGame = () => {
                                 })}
                             </div>
 
-                        </div>
                     </div>
                 </div>
                 <div className="play-footer">

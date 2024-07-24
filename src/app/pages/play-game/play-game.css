@@ -1,11 +1,5 @@
 
 
-.container {
-    margin: 0 auto;
-    max-width: 500px;
-    position:relative;
-}
-
 
 
 
@@ -92,7 +86,6 @@
 /*play-header*/
 
 .play-header {
-
     padding-bottom: 3px;
     border: 0.95px solid rgb(0, 0, 0);
     background: linear-gradient(90.00deg, rgb(128, 119, 109), rgb(145, 135, 137) 22%, rgb(187, 176, 174) 55%, rgb(215, 204, 200) 84%, rgb(226, 215, 210) 100%);
