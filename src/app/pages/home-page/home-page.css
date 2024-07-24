@@ -164,7 +164,10 @@
     font-weight: bold;
     border: none;
     background-color: transparent;
-    background-image: url('./images/main-page-menu-button.png');
+    background-image: url('./images/buttonSvg.svg');
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
     width: 149px;
     height: 65px;
 }
