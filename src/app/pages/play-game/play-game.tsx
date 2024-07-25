@@ -9,7 +9,6 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
 
-// Define a type for the game data structure
 interface GameData {
     trump_card: string;
     hand: string[];
@@ -37,16 +36,19 @@ const PlayGame = () => {
     const [isAnimating, setIsAnimating] = useState(false);
     const cardAnimationContainerRef = useRef<HTMLDivElement | null>(null);
     const handRef = useRef<HTMLDivElement | null>(null);
-    const [, setTableCards] = useState<string[]>([]);
+    const [myCards, setMyCards] = useState<string[]>([]);
+    const [tableCards, setTableCards] = useState<string[]>([]);
+
 
     const fetchGameData = async () => {
         try {
-            const response = await axios.get<GameData>('http://77.222.37.34:8001/v1/games/6/get_current_table', {
+            const response = await axios.get<GameData>('http://77.222.37.34:8001/v1/games/8/get_current_table', {
                 headers: {
                     'Authorization': 'ea5419dc0909da30f8ceafd76149b7e0e38b5b5e91830923'
                 },
             });
             setGameData(response.data);
+            setMyCards(response.data.hand);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching game data:', error);
@@ -62,7 +64,7 @@ const PlayGame = () => {
                     'Authorization': 'ea5419dc0909da30f8ceafd76149b7e0e38b5b5e91830923'
                 },
             });
-            const game = response.data.find(game => game.id === 6);
+            const game = response.data.find(game => game.id === 8);
             if (game) {
                 setBetValue(game.bet_value);
             } else {
@@ -99,14 +101,12 @@ const PlayGame = () => {
     const handleCardClick = async (card: string, e: React.MouseEvent<HTMLImageElement>) => {
         if (!cardAnimationContainerRef.current || !handRef.current) return;
 
-        // Клонируйте карту для анимации
         const cardClone = e.currentTarget.cloneNode(true) as HTMLImageElement;
         cardClone.classList.add('bita-card', 'animate');
         document.body.appendChild(cardClone);
 
         setSelectedCard(card);
 
-        // Уберите карту из руки
         e.currentTarget.style.display = 'none';
 
         setTimeout(() => {
@@ -116,34 +116,14 @@ const PlayGame = () => {
             cardClone.classList.remove('animate');
             cardClone.classList.add('final-position');
 
-            // Восстановите карту в руке
-            e.currentTarget.style.display = 'block';
+            setMyCards(prevCards => prevCards.filter(c => c !== card));
+            setTableCards(prevTableCards => [...prevTableCards, card]);
+
+            console.log('Updated Table Cards:', [...tableCards, card]);
+
         }, 500);
     };
 
-    const handleBitaClick = () => {
-        if (!cardAnimationContainerRef.current) return;
-
-        // Получите все карты на столе
-        const cards = document.querySelectorAll('.table-card img');
-
-        cards.forEach((card) => {
-            // Клонируйте каждую карту для анимации
-            const cardClone = card.cloneNode(true) as HTMLImageElement;
-            cardClone.classList.add('bita-card', 'animate');
-            document.body.appendChild(cardClone);
-
-            // Позиционируйте карту в `bita` контейнере
-            setTimeout(() => {
-                cardAnimationContainerRef.current?.appendChild(cardClone);
-                cardClone.classList.remove('animate');
-                cardClone.classList.add('move-to-bita');
-            }, 500);
-        });
-
-        // Очистите карты на столе
-        setTableCards([]);
-    };
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
@@ -263,7 +243,7 @@ const PlayGame = () => {
                     </div>
 
                     <div className="hand" ref={handRef}>
-                        {gameData && gameData.hand.map((card: string, index: number) => {
+                        {myCards.map((card: string, index: number) => {
                             const rotation = (index - middle) * angle;
                             const position = (index - middle) * offset;
 
@@ -297,7 +277,7 @@ const PlayGame = () => {
                 </div>
                 <div className="play-footer-wrap">
                     <div className="play-footer-block">
-                        <div className="play-footer-btn" onClick={handleBitaClick}>Бито</div>
+                        <button className="play-footer-btn">Бито</button>
                     </div>
                 </div>
             </div>
