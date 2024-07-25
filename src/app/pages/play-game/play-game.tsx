@@ -28,6 +28,7 @@ interface GameListItem {
 }
 
 const PlayGame = () => {
+    const id =9
     const [gameData, setGameData] = useState<GameData | null>(null);
     const [betValue, setBetValue] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
@@ -42,7 +43,7 @@ const PlayGame = () => {
 
     const fetchGameData = async () => {
         try {
-            const response = await axios.get<GameData>('https://foolcard2.shop/v1/games/9/get_current_table', {
+            const response = await axios.get<GameData>(`https://foolcard2.shop/v1/games/${id}/get_current_table`, {
                 headers: {
                     'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284'
                 },
@@ -98,7 +99,7 @@ const PlayGame = () => {
         return path;
     };
     const endTurn = async () => {
-        await axios.post(`https://foolcard2.shop/v1/games/${9}/end_turn`,{},{
+        await axios.post(`https://foolcard2.shop/v1/games/${id}/end_turn`,{},{
             headers: {
                 'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
             }
@@ -110,7 +111,7 @@ const PlayGame = () => {
         if (attackMode) {
             try {
                 await axios.post(
-                    `https://foolcard2.shop/v1/games/9/place_card_on_table?card=${card}`,
+                    `https://foolcard2.shop/v1/games/${id}/place_card_on_table?card=${card}`,
                     {},
                     {
                         headers: {
@@ -142,7 +143,7 @@ const PlayGame = () => {
             if (cardToBeat) {
                 try {
                     await axios.post(
-                        `https://foolcard2.shop/v1/games/9/beat_card?card_to_beat=${cardToBeat}&card_to_beat_by=${card}`,
+                        `https://foolcard2.shop/v1/games/${id}/beat_card?card_to_beat=${cardToBeat}&card_to_beat_by=${card}`,
                         {},
                         {
                             headers: {
