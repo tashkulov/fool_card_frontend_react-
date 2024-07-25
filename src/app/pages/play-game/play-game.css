@@ -36,6 +36,7 @@
     font-size: 20px;
     font-weight: 600;
     line-height: 24px;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center; /* Центрирует контент по горизонтали */
@@ -261,13 +262,23 @@
     left: 0;
 }
 
-.card-container .back-card {
+.back-card-in-deck {
+    position: absolute;
+    top: 150px;
+    transform: rotate(200deg);
+    left: -10px;
+}
+
+
+.back_card2 {
     position: absolute;
     top: 150px;
     transform: rotate(-200deg);
+
     right: -10px;
     z-index: 1;
 }
+
 .back_card1 {
     position: absolute;
     top: 200px;
@@ -276,14 +287,7 @@
     right: -10px; /* Смещение карты-рубашки для наложения */
     z-index: 2;
 }
-.back_card2 {
-    position: absolute;
-    top: 150px;
-    transform: rotate(200deg); /* Поворот карты-рубашки */
 
-    left: -10px; /* Смещение карты-рубашки для наложения */
-    z-index: 3;
-}
 .back_card3 {
     position: absolute;
     top: 260px;
@@ -292,12 +296,12 @@
     right: -10px; /* Смещение карты-рубашки для наложения */
     z-index: 4;
 }
-.bita-container {
+.table-card {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 360px; /* Ширина контейнера */
+    width: 400px;
     height: 240px; /* Высота контейнера */
     display: flex;
     flex-wrap: wrap; /* Позволяет картам переноситься на следующую строку */
@@ -310,19 +314,10 @@
 .bita-card {
     width: 64px; /* Ширина карты */
     height: 90px; /* Высота карты */
-    /* Убедитесь, что ширина и высота карты соответствуют вашему макету */
-    transition: transform 0.5s ease; /* Плавный переход для анимации */
+    transition: transform 0.5s ease, opacity 0.5s ease; /* Плавный переход для анимации */
     z-index: 6;
 }
 
-/* Убедитесь, что при анимации карты не перекрывают друг друга */
-.bita-card.animate {
-    transform: scale(0.5); /* Уменьшение размера при анимации */
-}
-
-.bita-card.final-position {
-    transform: scale(1); /* Обычный размер после анимации */
-}
 
 
 
@@ -331,7 +326,20 @@
     transition: transform 0.5s ease;
 }
 
-.bita-container .final-position {
+.table-card .final-position {
     transform: translateX(0) translateY(0); /* Настройте положение по вашему усмотрению */
 }
+.bita-card {
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.bita-card.animate {
+    transform: translateY(-50px); /* Измените это значение по необходимости */
+    opacity: 1;
+}
+
+.final-position {
+    transform: scale(1);
+}
+
 
