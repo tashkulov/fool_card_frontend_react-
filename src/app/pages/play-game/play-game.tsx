@@ -37,14 +37,14 @@ const PlayGame = () => {
     const cardAnimationContainerRef = useRef<HTMLDivElement | null>(null);
     const handRef = useRef<HTMLDivElement | null>(null);
     const [myCards, setMyCards] = useState<string[]>([]);
-    const [tableCards, setTableCards] = useState<string[]>([]);
-
+    const [tableCards, setTableCards] = useState<{ card: string, beaten_by_card: string | null }[]>([]);
+    const [attackMode, setAttackMode] = useState<boolean>(true); // Новое состояние для режима атаки
 
     const fetchGameData = async () => {
         try {
-            const response = await axios.get<GameData>('http://77.222.37.34:8001/v1/games/8/get_current_table', {
+            const response = await axios.get<GameData>('https://foolcard2.shop/v1/games/8/get_current_table', {
                 headers: {
-                    'Authorization': 'ea5419dc0909da30f8ceafd76149b7e0e38b5b5e91830923'
+                    'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284'
                 },
             });
             setGameData(response.data);
@@ -59,9 +59,9 @@ const PlayGame = () => {
 
     const fetchGameList = async () => {
         try {
-            const response = await axios.get<GameListItem[]>('http://77.222.37.34:8001/v1/games', {
+            const response = await axios.get<GameListItem[]>('https://foolcard2.shop/v1/games', {
                 headers: {
-                    'Authorization': 'ea5419dc0909da30f8ceafd76149b7e0e38b5b5e91830923'
+                    'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284'
                 },
             });
             const game = response.data.find(game => game.id === 8);
@@ -98,32 +98,73 @@ const PlayGame = () => {
         return path;
     };
 
-    const handleCardClick = async (card: string, e: React.MouseEvent<HTMLImageElement>) => {
-        if (!cardAnimationContainerRef.current || !handRef.current) return;
+    const handleCardClick = async (card: string) => {
+        if (attackMode) {
+            // Режим атаки: выкладываем карту на стол
+            try {
+                await axios.post(
+                    `https://foolcard2.shop/v1/games/8/place_card_on_table?card=${card}`,
+                    {},
+                    {
+                        headers: {
+                            'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
+                        },
+                    }
+                );
 
-        const cardClone = e.currentTarget.cloneNode(true) as HTMLImageElement;
-        cardClone.classList.add('bita-card', 'animate');
-        document.body.appendChild(cardClone);
+                setSelectedCard(card);
+                setIsAnimating(true);
 
-        setSelectedCard(card);
+                setTimeout(() => {
+                    setIsAnimating(false);
+                    setSelectedCard(null);
 
-        e.currentTarget.style.display = 'none';
+                    setMyCards(prevCards => prevCards.filter(c => c !== card));
+                    setTableCards(prevTableCards => [...prevTableCards, { card, beaten_by_card: null }]);
 
-        setTimeout(() => {
-            setIsAnimating(false);
-            setSelectedCard(null);
-            cardAnimationContainerRef.current?.appendChild(cardClone);
-            cardClone.classList.remove('animate');
-            cardClone.classList.add('final-position');
+                    console.log('Updated Table Cards:', [...tableCards, { card, beaten_by_card: null }]);
+                    setAttackMode(false); // Переключаемся в режим побития
+                }, 500);
+            } catch (error) {
+                console.error('Error placing card on table:', error);
+            }
+        } else {
+            // Режим побития: бьем карту на столе
+            const cardToBeat = tableCards.find(t => t.beaten_by_card === null)?.card;
 
-            setMyCards(prevCards => prevCards.filter(c => c !== card));
-            setTableCards(prevTableCards => [...prevTableCards, card]);
+            if (cardToBeat) {
+                try {
+                    await axios.post(
+                        `https://foolcard2.shop/v1/games/8/beat_card?card_to_beat=${cardToBeat}&card_to_beat_by=${card}`,
+                        {},
+                        {
+                            headers: {
+                                'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
+                            },
+                        }
+                    );
 
-            console.log('Updated Table Cards:', [...tableCards, card]);
+                    setTableCards(prevTableCards =>
+                        prevTableCards.map(t =>
+                            t.card === cardToBeat ? { ...t, beaten_by_card: card } : t
+                        )
+                    );
 
-        }, 500);
+                    setMyCards(prevCards => prevCards.filter(c => c !== card));
+
+                    console.log(`Card ${cardToBeat} beaten by ${card}`);
+                    setAttackMode(true); // Переключаемся обратно в режим атаки
+                } catch (error) {
+                    console.error('Error beating card:', error);
+                }
+            }
+        }
     };
 
+    const bita = () => {
+        console.log(tableCards);
+        setTableCards([]);
+    };
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
@@ -143,7 +184,7 @@ const PlayGame = () => {
                             </a>
                             <div className="play-header-coin">
                                 <img src={coins} alt="Coins" />
-                                <p>{betValue !== null ? `${betValue}` : 'N/A'}</p> {/* Display the bet value */}
+                                <p>{betValue !== null ? `${betValue}` : 'N/A'}</p>
                             </div>
                         </div>
                         <div className="play-header-rejim block-obvodka">
@@ -198,7 +239,6 @@ const PlayGame = () => {
                             />
                         </div>
                     </div>
-
                     <div className="bita">
                         <div className="card-container">
                             <img
@@ -229,17 +269,26 @@ const PlayGame = () => {
                     </div>
 
                     <div className="table-card" ref={cardAnimationContainerRef}>
-                        {selectedCard && (
-                            <img
-                                src={getCardImagePath(selectedCard)}
-                                alt={selectedCard}
-                                className={`bita-card ${isAnimating ? 'animate' : ''}`}
-                                onAnimationEnd={() => {
-                                    setIsAnimating(false);
-                                    setSelectedCard(null);
-                                }}
-                            />
-                        )}
+                        {tableCards.map(({card, beaten_by_card}, index) => (
+                            <div key={index} className="table-card-item">
+                                <img
+                                    src={getCardImagePath(card)}
+                                    alt={card}
+                                    className={`bita-card ${isAnimating ? 'animate' : ''}`}
+                                    onAnimationEnd={() => {
+                                        setIsAnimating(false);
+                                        setSelectedCard(null);
+                                    }}
+                                />
+                                {beaten_by_card && (
+                                    <img
+                                        src={getCardImagePath(beaten_by_card)}
+                                        alt={beaten_by_card}
+                                        className="beaten-card"
+                                    />
+                                )}
+                            </div>
+                        ))}
                     </div>
 
                     <div className="hand" ref={handRef}>
@@ -258,7 +307,7 @@ const PlayGame = () => {
                                         transition: 'transform 0.2s ease',
                                         zIndex: 10,
                                     }}
-                                    onClick={(e) => handleCardClick(card, e)}
+                                    onClick={() => handleCardClick(card)}
                                 />
                             );
                         })}
@@ -277,7 +326,7 @@ const PlayGame = () => {
                 </div>
                 <div className="play-footer-wrap">
                     <div className="play-footer-block">
-                        <button className="play-footer-btn">Бито</button>
+                        <button className="play-footer-btn" onClick={bita}>Бито</button>
                     </div>
                 </div>
             </div>

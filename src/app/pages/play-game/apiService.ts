@@ -1,51 +1,34 @@
-import axios from 'axios';
+import axios from "axios";
 
-const BASE_URL = 'http://77.222.37.34:8001/v1';
+try {
+    await axios.post(
+        `http://77.222.37.34:8001/v1/games/8/place_card_on_table?card=${card}`,
+        {},
+        {
+            headers: {
+                'Authorization': '41969c437fdebb0806f66c88c887c9d01ebaadf52df7382b',
+            },
+        }
+    );
 
-const AUTH_TOKEN = '461cc7f4f326092bd3967341eda52b594d0cee1932a3759e';
+    setSelectedCard(card);
+    setIsAnimating(true);
 
-const axiosInstance = axios.create({
-    baseURL: BASE_URL,
-    headers: {
-        Authorization: AUTH_TOKEN,
-    },
-});
+    setTimeout(() => {
+        setIsAnimating(false);
+        setSelectedCard(null);
+        // cardAnimationContainerRef.current?.appendChild(cardClone);
+        // cardClone.classList.remove('animate');
+        // cardClone.classList.add('final-position');
 
-// Define a type for the game data structure
-export interface GameData {
-    trump_card: string;
-    hand: string[];
+        setMyCards(prevCards => prevCards.filter(c => c !== card));
+        setTableCards(prevTableCards => [...prevTableCards, card]);
+
+        console.log('Updated Table Cards:', [...tableCards, card]);
+
+    }, 500);
+} catch (error) {
+    console.error('Error placing card on table:', error);
+    e.currentTarget.style.display = 'block'; // Show the card again if the request fails
 }
-
-export interface GameListItem {
-    bet_value: number;
-    card_amount: number;
-    participants_number: number;
-    access_type: string;
-    status: string;
-    game_mode: string;
-    toss_mode: string;
-    game_ending_type: string;
-    id: number;
-    created_by: number;
-}
-
-export const fetchGameData = async (gameId: number): Promise<GameData> => {
-    try {
-        const response = await axiosInstance.get<GameData>(`/games/${gameId}/get_current_table`);
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching game data:', error);
-        throw error;
-    }
-};
-
-export const fetchGameList = async (): Promise<GameListItem[]> => {
-    try {
-        const response = await axiosInstance.get<GameListItem[]>('/games');
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching game list:', error);
-        throw error;
-    }
 };
