@@ -42,7 +42,7 @@ const PlayGame = () => {
 
     const fetchGameData = async () => {
         try {
-            const response = await axios.get<GameData>(`https://foolcard2.shop/v1/games/10/get_current_table`, {
+            const response = await axios.get<GameData>(`https://foolcard2.shop/v1/games/11/get_current_table`, {
                 headers: {
                     'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284'
                 },
@@ -98,7 +98,7 @@ const PlayGame = () => {
         return path;
     };
     const endTurn = async () => {
-        await axios.post(`https://foolcard2.shop/v1/games/10/end_turn`,{},{
+        await axios.post(`https://foolcard2.shop/v1/games/11/end_turn`,{},{
             headers: {
                 'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
             }
@@ -110,7 +110,7 @@ const PlayGame = () => {
         if (attackMode) {
             try {
                 await axios.post(
-                    `https://foolcard2.shop/v1/games/10/place_card_on_table?card=${card}`,
+                    `https://foolcard2.shop/v1/games/11/place_card_on_table?card=${card}`,
                     {},
                     {
                         headers: {
@@ -142,7 +142,7 @@ const PlayGame = () => {
             if (cardToBeat) {
                 try {
                     await axios.post(
-                        `https://foolcard2.shop/v1/games/10/beat_card?card_to_beat=${cardToBeat}&card_to_beat_by=${card}`,
+                        `https://foolcard2.shop/v1/games/11/beat_card?card_to_beat=${cardToBeat}&card_to_beat_by=${card}`,
                         {},
                         {
                             headers: {
