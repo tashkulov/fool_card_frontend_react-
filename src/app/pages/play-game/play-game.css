@@ -305,17 +305,23 @@
     width: 400px;
     height: 240px; /* Высота контейнера */
     display: flex;
-    flex-wrap: wrap; /* Позволяет картам переноситься на следующую строку */
-    justify-content: center; /* Центрирование карт по горизонтали */
-    align-items: center; /* Центрирование карт по вертикали */
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
-    gap: 10px; /* Расстояние между картами */
+    gap: 10px;
 }
 
 .bita-card {
-    width: 64px; /* Ширина карты */
-    height: 90px; /* Высота карты */
-    transition: transform 0.5s ease, opacity 0.5s ease; /* Плавный переход для анимации */
+    width: 64px;
+    height: 90px;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    z-index: 6;
+}
+.beaten-card{
+    width: 64px;
+    height: 90px;
+    transition: transform 0.5s ease, opacity 0.5s ease;
     z-index: 6;
 }
 

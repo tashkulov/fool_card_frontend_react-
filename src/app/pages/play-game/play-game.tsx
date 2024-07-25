@@ -42,7 +42,7 @@ const PlayGame = () => {
 
     const fetchGameData = async () => {
         try {
-            const response = await axios.get<GameData>('https://foolcard2.shop/v1/games/8/get_current_table', {
+            const response = await axios.get<GameData>('https://foolcard2.shop/v1/games/9/get_current_table', {
                 headers: {
                     'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284'
                 },
@@ -97,13 +97,20 @@ const PlayGame = () => {
         const path = new URL(`../../../assets/cards/${suit}/${card}.svg`, import.meta.url).href;
         return path;
     };
+    const endTurn = async () => {
+        await axios.post(`https://foolcard2.shop/v1/games/${9}/end_turn`,{},{
+            headers: {
+                'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
+            }
+        })
+        setTableCards([]);
 
+    }
     const handleCardClick = async (card: string) => {
         if (attackMode) {
-            // Режим атаки: выкладываем карту на стол
             try {
                 await axios.post(
-                    `https://foolcard2.shop/v1/games/8/place_card_on_table?card=${card}`,
+                    `https://foolcard2.shop/v1/games/9/place_card_on_table?card=${card}`,
                     {},
                     {
                         headers: {
@@ -135,7 +142,7 @@ const PlayGame = () => {
             if (cardToBeat) {
                 try {
                     await axios.post(
-                        `https://foolcard2.shop/v1/games/8/beat_card?card_to_beat=${cardToBeat}&card_to_beat_by=${card}`,
+                        `https://foolcard2.shop/v1/games/9/beat_card?card_to_beat=${cardToBeat}&card_to_beat_by=${card}`,
                         {},
                         {
                             headers: {
@@ -161,10 +168,7 @@ const PlayGame = () => {
         }
     };
 
-    const bita = () => {
-        console.log(tableCards);
-        setTableCards([]);
-    };
+
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
@@ -326,7 +330,7 @@ const PlayGame = () => {
                 </div>
                 <div className="play-footer-wrap">
                     <div className="play-footer-block">
-                        <button className="play-footer-btn" onClick={bita}>Бито</button>
+                        <button className="play-footer-btn" onClick={endTurn}>Бито</button>
                     </div>
                 </div>
             </div>
