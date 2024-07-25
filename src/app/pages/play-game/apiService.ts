@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://77.222.37.34:8001/v1';
+const BASE_URL = 'https://foolcard2.shop/v1/games';
 
-const AUTH_TOKEN = '461cc7f4f326092bd3967341eda52b594d0cee1932a3759e';
+const AUTH_TOKEN = 'b4f35bfdcd2f7c9cdea3a64e0da7266ac9b8d8f2338ef4dc';
 
 const axiosInstance = axios.create({
     baseURL: BASE_URL,

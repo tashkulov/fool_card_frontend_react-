@@ -6,10 +6,9 @@ import GamePlay from "../img/Gameplay_Avatar.svg";
 import coins from "../img/coins.svg";
 import arrow from "../img/Arrow1.svg";
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
+import {useEffect, useState, useRef} from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
 
-// Define a type for the game data structure
 interface GameData {
     trump_card: string;
     hand: string[];
@@ -37,16 +36,19 @@ const PlayGame = () => {
     const [isAnimating, setIsAnimating] = useState(false);
     const cardAnimationContainerRef = useRef<HTMLDivElement | null>(null);
     const handRef = useRef<HTMLDivElement | null>(null);
-    const [, setTableCards] = useState<string[]>([]);
+    const [myCards, setMyCards] = useState<string[]>([]);
+    const [tableCards, setTableCards] = useState<{ card: string, beaten_by_card: string | null }[]>([]);
+    const [attackMode, setAttackMode] = useState<boolean>(true); // Новое состояние для режима атаки
 
     const fetchGameData = async () => {
         try {
-            const response = await axios.get<GameData>('http://77.222.37.34:8001/v1/games/6/get_current_table', {
+            const response = await axios.get<GameData>('https://foolcard2.shop/v1/games/8/get_current_table', {
                 headers: {
-                    'Authorization': 'ea5419dc0909da30f8ceafd76149b7e0e38b5b5e91830923'
+                    'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284'
                 },
             });
             setGameData(response.data);
+            setMyCards(response.data.hand);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching game data:', error);
@@ -57,12 +59,12 @@ const PlayGame = () => {
 
     const fetchGameList = async () => {
         try {
-            const response = await axios.get<GameListItem[]>('http://77.222.37.34:8001/v1/games', {
+            const response = await axios.get<GameListItem[]>('https://foolcard2.shop/v1/games', {
                 headers: {
-                    'Authorization': 'ea5419dc0909da30f8ceafd76149b7e0e38b5b5e91830923'
+                    'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284'
                 },
             });
-            const game = response.data.find(game => game.id === 6);
+            const game = response.data.find(game => game.id === 8);
             if (game) {
                 setBetValue(game.bet_value);
             } else {
@@ -96,52 +98,69 @@ const PlayGame = () => {
         return path;
     };
 
-    const handleCardClick = async (card: string, e: React.MouseEvent<HTMLImageElement>) => {
-        if (!cardAnimationContainerRef.current || !handRef.current) return;
+    const handleCardClick = async (card: string) => {
+        if (attackMode) {
+            try {
+                await axios.post(
+                    `https://foolcard2.shop/v1/games/8/place_card_on_table?card=${card}`,
+                    {},
+                    {
+                        headers: {
+                            'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
+                        },
+                    }
+                );
 
-        // Клонируйте карту для анимации
-        const cardClone = e.currentTarget.cloneNode(true) as HTMLImageElement;
-        cardClone.classList.add('bita-card', 'animate');
-        document.body.appendChild(cardClone);
+                setSelectedCard(card);
+                setIsAnimating(true);
+                setTimeout(() => {
+                    setIsAnimating(false);
+                    setSelectedCard(null);
 
-        setSelectedCard(card);
+                    setMyCards(prevCards => prevCards.filter(c => c !== card));
+                    setTableCards(prevTableCards => [...prevTableCards, {card, beaten_by_card: null}]);
 
-        // Уберите карту из руки
-        e.currentTarget.style.display = 'none';
+                    console.log('Updated Table Cards:', [...tableCards, {card, beaten_by_card: null}]);
+                    setAttackMode(false); // Переключаемся в режим побития
+                }, 500);
+            } catch (error) {
+                console.error('Error placing card on table:', error);
+            }
+        } else {
+            // Режим побития: бьем карту на столе
+            const cardToBeat = tableCards.find(t => t.beaten_by_card === null)?.card;
 
-        setTimeout(() => {
-            setIsAnimating(false);
-            setSelectedCard(null);
-            cardAnimationContainerRef.current?.appendChild(cardClone);
-            cardClone.classList.remove('animate');
-            cardClone.classList.add('final-position');
+            if (cardToBeat) {
+                try {
+                    await axios.post(
+                        `https://foolcard2.shop/v1/games/8/beat_card?card_to_beat=${cardToBeat}&card_to_beat_by=${card}`,
+                        {},
+                        {
+                            headers: {
+                                'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
+                            },
+                        }
+                    );
 
-            // Восстановите карту в руке
-            e.currentTarget.style.display = 'block';
-        }, 500);
+                    setTableCards(prevTableCards =>
+                        prevTableCards.map(t =>
+                            t.card === cardToBeat ? {...t, beaten_by_card: card} : t
+                        )
+                    );
+
+                    setMyCards(prevCards => prevCards.filter(c => c !== card));
+
+                    console.log(`Card ${cardToBeat} beaten by ${card}`);
+                    setAttackMode(true); // Переключаемся обратно в режим атаки
+                } catch (error) {
+                    console.error('Error beating card:', error);
+                }
+            }
+        }
     };
 
-    const handleBitaClick = () => {
-        if (!cardAnimationContainerRef.current) return;
-
-        // Получите все карты на столе
-        const cards = document.querySelectorAll('.table-card img');
-
-        cards.forEach((card) => {
-            // Клонируйте каждую карту для анимации
-            const cardClone = card.cloneNode(true) as HTMLImageElement;
-            cardClone.classList.add('bita-card', 'animate');
-            document.body.appendChild(cardClone);
-
-            // Позиционируйте карту в `bita` контейнере
-            setTimeout(() => {
-                cardAnimationContainerRef.current?.appendChild(cardClone);
-                cardClone.classList.remove('animate');
-                cardClone.classList.add('move-to-bita');
-            }, 500);
-        });
-
-        // Очистите карты на столе
+    const bita = () => {
+        console.log(tableCards);
         setTableCards([]);
     };
 
@@ -159,17 +178,17 @@ const PlayGame = () => {
                     <div className="play-header-wrapper">
                         <div className="play-header-block">
                             <a className="play-header-back block-obvodka">
-                                <img src={arrow} alt="Back" />
+                                <img src={arrow} alt="Back"/>
                             </a>
                             <div className="play-header-coin">
-                                <img src={coins} alt="Coins" />
-                                <p>{betValue !== null ? `${betValue}` : 'N/A'}</p> {/* Display the bet value */}
+                                <img src={coins} alt="Coins"/>
+                                <p>{betValue !== null ? `${betValue}` : 'N/A'}</p>
                             </div>
                         </div>
                         <div className="play-header-rejim block-obvodka">
-                            <img src={card1} alt="Card 1" />
-                            <img src={card2} alt="Card 2" />
-                            <img src={card3} alt="Card 3" />
+                            <img src={card1} alt="Card 1"/>
+                            <img src={card2} alt="Card 2"/>
+                            <img src={card3} alt="Card 3"/>
                         </div>
                     </div>
                 </section>
@@ -184,7 +203,6 @@ const PlayGame = () => {
                             <div className="player-block user-dumaet footer-ava-wp">
                                 <img src={GamePlay} alt="Gameplay Avatar"/>
                             </div>
-
                             <div className="players-flex">
                                 <div className="player-block footer-ava-wp">
                                     <img src={GamePlay} alt="Gameplay Avatar"/>
@@ -218,7 +236,6 @@ const PlayGame = () => {
                             />
                         </div>
                     </div>
-
                     <div className="bita">
                         <div className="card-container">
                             <img
@@ -249,21 +266,29 @@ const PlayGame = () => {
                     </div>
 
                     <div className="table-card" ref={cardAnimationContainerRef}>
-                        {selectedCard && (
-                            <img
-                                src={getCardImagePath(selectedCard)}
-                                alt={selectedCard}
-                                className={`bita-card ${isAnimating ? 'animate' : ''}`}
-                                onAnimationEnd={() => {
-                                    setIsAnimating(false);
-                                    setSelectedCard(null);
-                                }}
-                            />
-                        )}
+                        {tableCards.map(({card, beaten_by_card}, index) => (
+                            <div key={index} className="table-card-item">
+                                <img
+                                    src={getCardImagePath(card)}
+                                    alt={card}
+                                    className={`bita-card ${isAnimating ? 'animate' : ''}`}
+                                    onAnimationEnd={() => {
+                                        setIsAnimating(false);
+                                        setSelectedCard(null);
+                                    }}
+                                />
+                                {beaten_by_card && (
+                                    <img
+                                        src={getCardImagePath(beaten_by_card)}
+                                        alt={beaten_by_card}
+                                        className="beaten-card"
+                                    />
+                                )}
+                            </div>
+                        ))}
                     </div>
-
                     <div className="hand" ref={handRef}>
-                        {gameData && gameData.hand.map((card: string, index: number) => {
+                        {myCards.map((card: string, index: number) => {
                             const rotation = (index - middle) * angle;
                             const position = (index - middle) * offset;
 
@@ -278,7 +303,7 @@ const PlayGame = () => {
                                         transition: 'transform 0.2s ease',
                                         zIndex: 10,
                                     }}
-                                    onClick={(e) => handleCardClick(card, e)}
+                                    onClick={() => handleCardClick(card)}
                                 />
                             );
                         })}
@@ -297,7 +322,7 @@ const PlayGame = () => {
                 </div>
                 <div className="play-footer-wrap">
                     <div className="play-footer-block">
-                        <div className="play-footer-btn" onClick={handleBitaClick}>Бито</div>
+                        <button className="play-footer-btn" onClick={bita}>Бито</button>
                     </div>
                 </div>
             </div>

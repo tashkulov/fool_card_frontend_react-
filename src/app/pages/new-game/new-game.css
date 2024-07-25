@@ -598,7 +598,7 @@ section {
 
 .plus-block {
     height: 44px;
-    width: 44;
+    width: 44px;
     border-radius: 10px;
     display: flex;
     background: linear-gradient(180.00deg, rgb(79, 21, 21), rgb(56, 12, 12) 100%);
@@ -664,7 +664,7 @@ section {
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
-    letter-spacing: 0%;
+    letter-spacing: 0;
     text-align: center;
     color: #fff;
 }
@@ -833,7 +833,7 @@ section {
     font-size: 12px;
     font-weight: 400;
     line-height: 15px;
-    letter-spacing: 0%;
+    letter-spacing: 0;
     text-align: center;
 }
 
@@ -844,7 +844,7 @@ section {
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
-    letter-spacing: 0%;
+    letter-spacing: 0;
     text-align: center;
     color: #fff;
 }
@@ -1528,6 +1528,7 @@ section {
     position: absolute;
     width: 100%;
     text-align: center;
+    z-index: -1;
 }
 
 .play-footer-ava img {

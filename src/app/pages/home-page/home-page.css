@@ -10,7 +10,7 @@
 }
 
 .main-page-header {
-    background-image: url("./images/main-page-header-bg.png");
+    background-image: url("./images/mainPageHeaderBg.svg");
     background-repeat: no-repeat;
     background-size: cover;
     height: 126px;
@@ -110,7 +110,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('./images/default-avatar-border.png');
+    background-image: url('./images/borderAvatar.svg');
     height: 98px;
     width: 96px;
 }
@@ -119,7 +119,7 @@
     border-radius: 100%;
     height: 76px;
     width: 76px;
-    background-image: url('./images/default-avatar.png');
+    background-image: url('./images/avatarHeader.svg');
 }
 
 .main-page-hands-cards {
