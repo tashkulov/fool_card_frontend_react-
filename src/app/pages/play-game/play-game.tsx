@@ -8,6 +8,7 @@ import arrow from "../img/Arrow1.svg";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
+import {Link} from 'react-router-dom';
 
 interface GameData {
     trump_card: string;
@@ -136,7 +137,6 @@ const PlayGame = () => {
                 console.error('Error placing card on table:', error);
             }
         } else {
-            // Режим побития: бьем карту на столе
             const cardToBeat = tableCards.find(t => t.beaten_by_card === null)?.card;
 
             if (cardToBeat) {
@@ -182,10 +182,15 @@ const PlayGame = () => {
             <div className="plays">
                 <section className="play-header">
                     <div className="play-header-wrapper">
+
                         <div className="play-header-block">
+                            <Link  to={'/'}>
                             <a className="play-header-back block-obvodka">
-                                <img src={arrow} alt="Back" />
-                            </a>
+
+                                    <img src={arrow} alt="Back"/>
+                                 </a>
+                            </Link>
+
                             <div className="play-header-coin">
                                 <img src={coins} alt="Coins" />
                                 <p>{betValue !== null ? `${betValue}` : 'N/A'}</p>
